@@ -17,7 +17,7 @@ TagManager:
   - Wall
   - 
   - 
-  - 
+  - MiniMap
   - 
   - 
   - 
@@ -58,4 +58,7 @@ TagManager:
     locked: 0
   - name: Loot
     uniqueID: 3998931987
+    locked: 0
+  - name: MiniMap
+    uniqueID: 103850149
     locked: 0
