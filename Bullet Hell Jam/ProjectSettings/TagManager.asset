@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - PlayerProjectile
+  - EnemyProjectile
+  - Wall
   - 
   - 
   - 
@@ -40,4 +40,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 297645189
+    locked: 0
+  - name: Wall
+    uniqueID: 2210533209
+    locked: 0
+  - name: Decoration
+    uniqueID: 3164758369
+    locked: 0
+  - name: Character
+    uniqueID: 1164204211
+    locked: 0
+  - name: Weapon
+    uniqueID: 2301885533
+    locked: 0
+  - name: Loot
+    uniqueID: 3998931987
     locked: 0
