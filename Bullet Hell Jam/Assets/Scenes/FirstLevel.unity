@@ -12464,9 +12464,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 110585755}
+  - {fileID: 1863847902}
   - {fileID: 570064530}
   - {fileID: 1952786695}
+  - {fileID: 110585755}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -12497,6 +12498,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1863847901}
   - {fileID: 110585754}
   - {fileID: 570064529}
   - {fileID: 1952786694}
@@ -12579,7 +12581,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -12790,6 +12792,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1372474233}
   - component: {fileID: 1372474232}
+  - component: {fileID: 1372474234}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -12830,6 +12833,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1372474234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372474231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29af3c7724774bf5adf0984cd247fca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lootPrefabs:
+  - {fileID: 3975555077622271191, guid: ddead46cd08fd4a0bae0d032bd2abb47, type: 3}
+  - {fileID: 3975555077622271191, guid: ddead46cd08fd4a0bae0d032bd2abb47, type: 3}
+  - {fileID: 1233605745097876054, guid: 5ac4fff74ae8f43f8b42e3ab92d54636, type: 3}
+  - {fileID: 1233605745097876054, guid: 5ac4fff74ae8f43f8b42e3ab92d54636, type: 3}
+  - {fileID: 1233605745097876054, guid: 5ac4fff74ae8f43f8b42e3ab92d54636, type: 3}
+  - {fileID: 8161545908526082586, guid: 0f330f505a44f4b65855e49e722d8b0d, type: 3}
+  _specialLootPrefabs:
+  - {fileID: 3975555077622271191, guid: ddead46cd08fd4a0bae0d032bd2abb47, type: 3}
+  - {fileID: 7772643424121672181, guid: bab1723515fcf478980554f2b5ab4008, type: 3}
+  - {fileID: 1233605745097876054, guid: 5ac4fff74ae8f43f8b42e3ab92d54636, type: 3}
+  - {fileID: 1233605745097876054, guid: 5ac4fff74ae8f43f8b42e3ab92d54636, type: 3}
+  - {fileID: 8161545908526082586, guid: 0f330f505a44f4b65855e49e722d8b0d, type: 3}
+  - {fileID: 5114657283297683638, guid: a8d4ec1b1d828459688c4cb085c745a2, type: 3}
 --- !u!1 &1428619738
 GameObject:
   m_ObjectHideFlags: 0
@@ -13290,6 +13319,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minimapIcon: {fileID: 2146962691}
+--- !u!1 &1863847900
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1863847901}
+  - component: {fileID: 1863847902}
+  m_Layer: 0
+  m_Name: WalletInstaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1863847901
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863847900}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 642395570}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1863847902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863847900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eff7d06d237d49c6a0bdeb6eb8a4dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _walletPrefab: {fileID: 150851046482523972, guid: 46c9398f3cd3642db9da8afbbcf2b164, type: 3}
 --- !u!1 &1898735947
 GameObject:
   m_ObjectHideFlags: 0

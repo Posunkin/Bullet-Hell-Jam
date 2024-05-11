@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 public class PlayerStats : MonoBehaviour, IDamageable
 {
@@ -8,12 +9,19 @@ public class PlayerStats : MonoBehaviour, IDamageable
     [SerializeField] private HealthBar _healthBar;
     private float _currentHealth;
     private PlayerController _playerController;
+    private Wallet _wallet;
 
     private void Start()
     {
         _playerController = GetComponent<PlayerController>();
         _currentHealth = _maxHealth;
         _healthBar.SetHealth(_maxHealth);
+    }
+
+    [Inject]
+    private void Construct(Wallet wallet)
+    {
+        _wallet = wallet;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -31,6 +39,11 @@ public class PlayerStats : MonoBehaviour, IDamageable
                         _healthBar.ChangeHealth(_currentHealth);
                         Destroy(other.gameObject);
                     }
+                    break;
+                case LootType.Money:
+                    Money money = (Money)loot;
+                    _wallet.AddMoney(money.MoneyCount);
+                    Destroy(other.gameObject);
                     break;
             }            
         }

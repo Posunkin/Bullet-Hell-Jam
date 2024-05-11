@@ -10,11 +10,13 @@ public class Spawner : MonoBehaviour
     private int _waveCount;
     private Room _currentRoom;
     private SpawnPoint[] _spawnPoints;
+    private RewardSpawner _rewardSpawner;
 
     private void Awake()
     {
         _enemyCount = 0;
         _waveCount = 0;
+        _rewardSpawner = GetComponent<RewardSpawner>();
     }
 
     [Inject]
@@ -68,6 +70,7 @@ public class Spawner : MonoBehaviour
         _enemyCount--;
         if (_enemyCount == 0)
         {
+            _rewardSpawner.SpawnBaseReward(_currentRoom.RoomCenter);
             _currentRoom.OpenTheDoors();
         }
     }
@@ -81,6 +84,7 @@ public class Spawner : MonoBehaviour
             if (_waveCount == 3) 
             {
                 _currentRoom.OpenTheDoors();
+                _rewardSpawner.SpawnChallengeReward(_currentRoom.RoomCenter);
                 _waveCount = 0;
             }
             else

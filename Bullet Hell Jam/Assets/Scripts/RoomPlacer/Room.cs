@@ -10,6 +10,7 @@ public enum RoomType
 
 public class Room : MonoBehaviour
 {
+    public Transform RoomCenter { get => _roomCenter; }
     public RoomType Type { get => _type; }
     public Door DoorU { get => _doorU; }
     public Door DoorD { get => _doorD; }
