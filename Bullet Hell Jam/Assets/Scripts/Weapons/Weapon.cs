@@ -11,7 +11,8 @@ public class Weapon : MonoBehaviour, IShootable
     private WaitForSeconds _fireDelay;
 
     [Header("Particles parameters:")]
-    [SerializeField] private LayerMask colliderLayer;
+    [SerializeField] private Material _bulletVisual;
+    [SerializeField] private LayerMask _colliderLayer;
 
     private ParticleSystem _system;
     private bool _shooting = false;
@@ -75,7 +76,7 @@ public class Weapon : MonoBehaviour, IShootable
         form.enabled = false;
 
         var rend = system.GetComponent<ParticleSystemRenderer>();
-        rend.renderMode = ParticleSystemRenderMode.Mesh;
+        rend.material = _bulletVisual;
 
         var collision = system.collision;
         collision.enabled = true;
@@ -83,7 +84,7 @@ public class Weapon : MonoBehaviour, IShootable
         collision.mode = ParticleSystemCollisionMode.Collision2D;
         collision.lifetimeLoss = 1;
         collision.sendCollisionMessages = true;
-        collision.collidesWith = colliderLayer;
+        collision.collidesWith = _colliderLayer;
     }
 
     private void OnParticleCollision(GameObject other)

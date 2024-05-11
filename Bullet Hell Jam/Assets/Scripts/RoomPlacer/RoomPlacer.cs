@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 public class RoomPlacer : MonoBehaviour
 {
@@ -11,11 +12,18 @@ public class RoomPlacer : MonoBehaviour
     [SerializeField] private int _levelSize;
 
     private Room[,] _spawnedRooms;
+    private IInstantiator _instantiator;
 
     private int _maxX, _maxY, _mid;
     private float _distanceToFarestRoom;
     private Vector2Int _farestRoomPos;
     private Room _farestRoom;
+
+    [Inject]
+    private void Construct(IInstantiator instantiator)
+    {
+        _instantiator = instantiator;
+    }
 
     private IEnumerator Start()
     {
@@ -61,7 +69,7 @@ public class RoomPlacer : MonoBehaviour
         }
         Room newRoom;
         Vector2Int position = vacantPlaces.ElementAt(Random.Range(0, vacantPlaces.Count));
-        newRoom = Instantiate(_roomPrefabs[Random.Range(0, _roomPrefabs.Length)]);
+        newRoom = _instantiator.InstantiatePrefabForComponent<Room>(_roomPrefabs[Random.Range(0, _roomPrefabs.Length)]);
         newRoom.transform.position = new Vector3((position.x - _mid) * 42, (position.y - _mid) * 24, 0);
         newRoom.Position = position;
         float distance = Vector3.Distance(_startingRoom.transform.position, newRoom.transform.position); 
@@ -121,29 +129,5 @@ public class RoomPlacer : MonoBehaviour
                 selectedRoom.DoorR.gameObject.SetActive(false);
             }
         }
-
-        // Vector2Int selectedDirection = neighbours[Random.Range(0, neighbours.Count)];
-        // Room selectedRoom = _spawnedRooms[p.x + selectedDirection.x, p.y + selectedDirection.y];
-
-        // if (selectedDirection == Vector2Int.up)
-        // {
-        //     room.DoorU.gameObject.SetActive(false);
-        //     selectedRoom.DoorD.gameObject.SetActive(false);
-        // }
-        // else if (selectedDirection == Vector2Int.down)
-        // {
-        //     room.DoorD.gameObject.SetActive(false);
-        //     selectedRoom.DoorU.gameObject.SetActive(false);
-        // }
-        // else if (selectedDirection == Vector2Int.right)
-        // {
-        //     room.DoorR.gameObject.SetActive(false);
-        //     selectedRoom.DoorL.gameObject.SetActive(false);
-        // }
-        // else if (selectedDirection == Vector2Int.left)
-        // {
-        //     room.DoorL.gameObject.SetActive(false);
-        //     selectedRoom.DoorR.gameObject.SetActive(false);
-        // }
     }
 }

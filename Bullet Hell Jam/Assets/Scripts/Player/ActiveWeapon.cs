@@ -4,6 +4,7 @@ public class ActiveWeapon : MonoBehaviour
 {
     private Weapon _currentWeapon;
     private PlayerInput _input;
+    private bool _shooting = false;
 
     private void Awake()
     {
@@ -13,7 +14,13 @@ public class ActiveWeapon : MonoBehaviour
 
     private void Start()
     {
-        _input.Combat.Shoot.started += _ => _currentWeapon.Shoot();
+        _input.Combat.Shoot.started += _ => _shooting = true;
+        _input.Combat.Shoot.canceled += _ => _shooting = false;
+    }
+
+    private void Update()
+    {
+        if (_shooting) _currentWeapon.Shoot();
     }
 
     private void OnEnable()

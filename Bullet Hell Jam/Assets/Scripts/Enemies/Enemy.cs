@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour, IDamageable
         if (hp <= 0)
         {
             OnEnemyDeath?.Invoke(this);
-            Destroy(gameObject);
+            Destroy(gameObject, 0.3f);
         }
     }
 }

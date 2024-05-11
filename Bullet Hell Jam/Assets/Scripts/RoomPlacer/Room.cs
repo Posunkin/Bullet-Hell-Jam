@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 public enum RoomType
 {
@@ -30,9 +31,10 @@ public class Room : MonoBehaviour
     private bool _roomVisited;
     private Spawner _spawner;
 
-    private void Start()
+    [Inject]
+    private void Construct(Spawner spawner)
     {
-        _spawner = Spawner.Instance;
+        _spawner = spawner;
     }
 
     public void Enter()

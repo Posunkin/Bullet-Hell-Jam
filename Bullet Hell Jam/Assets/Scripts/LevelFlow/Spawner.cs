@@ -1,25 +1,23 @@
-using System.Drawing;
 using UnityEngine;
+using Zenject;
 
 public class Spawner : MonoBehaviour
 {
-    public static Spawner Instance; 
     [SerializeField] private Enemy[] _enemyPrefabs;
+    private IInstantiator _instantiator;
 
     private int _enemyCount;
     private Room _currentRoom;
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-            _enemyCount = 0;
-        }
+        _enemyCount = 0;
+    }
+
+    [Inject]
+    private void Construct(IInstantiator instantiator)
+    {
+        _instantiator = instantiator;
     }
 
     public void SpawnEnemies(Room room, SpawnPoint[] spawnPoints)
@@ -27,9 +25,9 @@ public class Spawner : MonoBehaviour
         _currentRoom = room;
         foreach (var p in spawnPoints)
         {
-            Enemy go = Instantiate(_enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)]);
+            Enemy go = _instantiator.InstantiatePrefabForComponent<Enemy>(_enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)]);
             go.transform.position = p.gameObject.transform.position;
-            go.OnEnemyDeath += EnemyDied; 
+            go.OnEnemyDeath += EnemyDied;
             _enemyCount++;
         }
     }
