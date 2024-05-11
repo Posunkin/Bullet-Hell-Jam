@@ -16,6 +16,7 @@ public class PursuingBullet : Bullet
 
     protected override void Update()
     {
+        if (_target == null) return;
         _direction = (_target.position - transform.position).normalized;
         base.Update();
     }

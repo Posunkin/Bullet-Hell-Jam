@@ -16,6 +16,26 @@ public class PlayerStats : MonoBehaviour, IDamageable
         _healthBar.SetHealth(_maxHealth);
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent<Loot>(out Loot loot))
+        {
+            switch (loot.Type)
+            {
+                case LootType.HealthUp:
+                    if (_currentHealth != _maxHealth)
+                    {
+                        HealthUp healthUp = (HealthUp)loot;
+                        Debug.Log(healthUp.HealPercent);
+                        _currentHealth += _maxHealth * (healthUp.HealPercent / 100);
+                        _healthBar.ChangeHealth(_currentHealth);
+                        Destroy(other.gameObject);
+                    }
+                    break;
+            }            
+        }
+    }
+
     public void TakeDamage(float damage)
     {
         if (_playerController.IsDashing) return;
