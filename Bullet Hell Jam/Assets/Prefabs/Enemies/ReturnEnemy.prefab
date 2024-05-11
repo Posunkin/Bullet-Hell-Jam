@@ -4879,7 +4879,7 @@ MonoBehaviour:
   _bulletVisual: {fileID: 2100000, guid: 81fa2d61e258946adaf0fa8b1b45801f, type: 2}
   _colliderLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 520
 --- !u!114 &4566378148417955266
 MonoBehaviour:
   m_ObjectHideFlags: 0
