@@ -48,6 +48,16 @@ public class Room : MonoBehaviour
         _spawner.SpawnEnemies(this, _spawnPoints);
     }
 
+    public void EnterBossRoom()
+    {
+        Debug.Log("Entering boss room");
+        SetCamera();
+        if (_roomVisited || _startedRoom) return;
+        CloseTheDoors();
+        _roomVisited = true;
+        _spawner.SpawnEnemies(this, _spawnPoints);
+    }
+
     private void SetCamera()
     {
         Vector3 pos = _roomCenter.position;
@@ -71,6 +81,7 @@ public class Room : MonoBehaviour
 
     private void CloseTheDoors()
     {
+        Debug.Log("ClosingDoors");
         _doorD.gameObject.SetActive(true);
         _doorU.gameObject.SetActive(true);
         _doorR.gameObject.SetActive(true);

@@ -7,12 +7,14 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     [SerializeField] private float _maxHealth;
     [SerializeField] private HealthBar _healthBar;
+    [SerializeField] private bool _cantDie;
     private float _currentHealth;
     private PlayerController _playerController;
     private Wallet _wallet;
 
     private void Start()
     {
+        HaveKey = false;
         _playerController = GetComponent<PlayerController>();
         _currentHealth = _maxHealth;
         _healthBar.SetHealth(_maxHealth);
@@ -45,13 +47,17 @@ public class PlayerStats : MonoBehaviour, IDamageable
                     _wallet.AddMoney(money.MoneyCount);
                     Destroy(other.gameObject);
                     break;
+                case LootType.Key:
+                    HaveKey = true;
+                    Destroy(other.gameObject);
+                    break;
             }            
         }
     }
 
     public void TakeDamage(float damage)
     {
-        if (_playerController.IsDashing) return;
+        if (_playerController.IsDashing || _cantDie) return;
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {

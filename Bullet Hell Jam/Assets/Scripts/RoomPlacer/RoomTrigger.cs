@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class RoomTrigger : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer _minimapIcon;
-    private Color _defaultColor;
-    private Color _enterColor;
-    private Room _room;
+    [SerializeField] protected SpriteRenderer _minimapIcon;
+    protected Color _defaultColor;
+    protected Color _enterColor;
+    protected Room _room;
 
-    private void Start()
+    protected void Start()
     {
         _room = GetComponent<Room>();
         _defaultColor = _minimapIcon.color;
         _enterColor = Color.white;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (other.GetComponent<PlayerStats>() != null)
         {
@@ -23,7 +23,7 @@ public class RoomTrigger : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    protected virtual void OnTriggerExit2D(Collider2D other)
     {
         if (other.GetComponent<PlayerStats>() != null)
         {

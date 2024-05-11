@@ -33,15 +33,20 @@ public class RoomPlacer : MonoBehaviour
 
         for (int i = 0; i < _levelSize; i++)
         {
+            Debug.Log(i);
             if (i == _levelSize - 2)
             {
                 PlaceChallengeRoom();
-                break;
+                continue;
+            }
+            if (i == _levelSize - 1)
+            {
+                PlaceBossRoom();
+                continue;
             }
             PlaceNewRoom();
             yield return new WaitForSeconds(0.5f);
         }
-        // PlaceBossRoom();
 
         for (int x = 0; x < _spawnedRooms.GetLength(0); x++)
         {
@@ -79,6 +84,12 @@ public class RoomPlacer : MonoBehaviour
 
     private void PlaceBossRoom()
     {
+        HashSet<Vector2Int> vacantPlaces = GetVacantPlaces();
+        Vector2Int position = vacantPlaces.ElementAt(Random.Range(0, vacantPlaces.Count));
+        Room bossRoom = _instantiator.InstantiatePrefabForComponent<Room>(_bossRoomPrefab);
+        bossRoom.transform.position = new Vector3((position.x - _mid) * 42, (position.y - _mid) * 24, 0);
+        bossRoom.Position = position;
+        _spawnedRooms[position.x, position.y] = bossRoom;
     }
 
     private HashSet<Vector2Int> GetVacantPlaces()
@@ -108,7 +119,38 @@ public class RoomPlacer : MonoBehaviour
         if (room.DoorR != null && p.x < _maxX && _spawnedRooms[p.x + 1, p.y]?.DoorL != null) neighbours.Add(Vector2Int.right);
         if (room.DoorL != null && p.x > 0 && _spawnedRooms[p.x - 1, p.y]?.DoorR != null) neighbours.Add(Vector2Int.left);
 
-        if (neighbours.Count == 0 || room.Type == RoomType.Boss) return;
+        if (room.Type == RoomType.Boss) 
+        {
+            foreach (var dir in neighbours)
+            {
+                Room selectedRoom = _spawnedRooms[p.x + dir.x, p.y + dir.y];
+                if (dir == Vector2Int.up)
+                {
+                    room.DoorU.gameObject.SetActive(true);
+                    room.HaveUpNeigh = true;
+                    selectedRoom.DoorD.gameObject.SetActive(false);
+                }
+                else if (dir == Vector2Int.down)
+                {
+                    room.DoorD.gameObject.SetActive(true);
+                    room.HaveDownNeigh = true;
+                    selectedRoom.DoorU.gameObject.SetActive(false);
+                }
+                else if (dir == Vector2Int.right)
+                {
+                    room.DoorR.gameObject.SetActive(true);
+                    room.HaveRightNeigh = true;
+                    selectedRoom.DoorL.gameObject.SetActive(false);
+                }
+                else if (dir == Vector2Int.left)
+                {
+                    room.DoorL.gameObject.SetActive(true);
+                    room.HaveLeftNeigh = true;
+                    selectedRoom.DoorR.gameObject.SetActive(false);
+                }
+            }
+            return;
+        }
 
         foreach (var dir in neighbours)
         {

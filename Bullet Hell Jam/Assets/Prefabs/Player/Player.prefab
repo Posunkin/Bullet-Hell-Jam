@@ -312,6 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 10
   _healthBar: {fileID: 3986789059500523871}
+  _cantDie: 1
 --- !u!1 &3341882724199491991
 GameObject:
   m_ObjectHideFlags: 0
