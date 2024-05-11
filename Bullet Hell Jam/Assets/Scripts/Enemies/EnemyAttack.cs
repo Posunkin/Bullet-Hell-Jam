@@ -28,6 +28,7 @@ public class EnemyAttack : MonoBehaviour
 
     private void RotateWeapon()
     {
+        if (_player == null) return;
         Vector2 playerPos = _player.transform.position;
         transform.LookAt(playerPos);
     }

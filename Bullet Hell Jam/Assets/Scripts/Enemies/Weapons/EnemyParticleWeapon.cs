@@ -100,4 +100,12 @@ public class EnemyParticleWeapon : EnemyWeapon
         yield return _fireDelay;
         _canShoot = true;
     }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.TryGetComponent<IDamageable>(out IDamageable target))
+        {
+            target.TakeDamage(_damage);
+        }
+    }
 }

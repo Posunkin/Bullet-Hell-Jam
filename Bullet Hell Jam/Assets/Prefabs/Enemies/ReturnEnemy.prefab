@@ -4879,7 +4879,7 @@ MonoBehaviour:
   _bulletVisual: {fileID: 2100000, guid: 81fa2d61e258946adaf0fa8b1b45801f, type: 2}
   _colliderLayer:
     serializedVersion: 2
-    m_Bits: 520
+    m_Bits: 8
 --- !u!114 &4566378148417955266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5042,6 +5042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dfafbf4b76ed457181fb3e2e703e668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxHealth: 5
 --- !u!50 &8570515035023898497
 Rigidbody2D:
   serializedVersion: 4

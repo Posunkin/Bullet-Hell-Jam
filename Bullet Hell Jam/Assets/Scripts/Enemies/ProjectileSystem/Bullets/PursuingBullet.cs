@@ -29,10 +29,9 @@ public class PursuingBullet : Bullet
 
     protected override void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("Triggered with " + other.gameObject.name);
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            damageable.TakeDamage();
+            damageable.TakeDamage(_damage);
         }
         ReturnBullet();
     }

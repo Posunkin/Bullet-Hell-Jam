@@ -4,15 +4,21 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 {
     public Action<Enemy> OnEnemyDeath;
-    private float hp = 2;
+    [SerializeField] private float _maxHealth;
+    private float _currentHealth;
 
-    public void TakeDamage()
+    private void Start()
     {
-        hp -= 1;
-        if (hp <= 0)
+        _currentHealth = _maxHealth;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _currentHealth -= damage;
+        if (_currentHealth <= 0)
         {
             OnEnemyDeath?.Invoke(this);
-            Destroy(gameObject, 0.3f);
+            Destroy(gameObject, 0.2f);
         }
     }
 }

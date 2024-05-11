@@ -4,6 +4,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour, IShootable
 {
     [Header("Weapon parameters:")]
+    [SerializeField] private float _damage;
     [SerializeField] private float _speed;
     [SerializeField] private float _lifeTime;
     [SerializeField] private float _size;
@@ -91,7 +92,7 @@ public class Weapon : MonoBehaviour, IShootable
     {
         if (other.TryGetComponent<IDamageable>(out IDamageable target))
         {
-            target.TakeDamage();
+            target.TakeDamage(_damage);
         }
     }
 }

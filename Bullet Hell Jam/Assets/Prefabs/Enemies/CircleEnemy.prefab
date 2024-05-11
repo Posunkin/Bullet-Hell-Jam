@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dfafbf4b76ed457181fb3e2e703e668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxHealth: 3
 --- !u!50 &6854904277410755661
 Rigidbody2D:
   serializedVersion: 4
@@ -5084,6 +5085,13 @@ MonoBehaviour:
   _lifeTime: 5
   _size: 0.4
   _shapeEnable: 1
+  _projectilesVelocityEnabled: 0
+  _curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _bulletVisual: {fileID: 2100000, guid: 81fa2d61e258946adaf0fa8b1b45801f, type: 2}
   _colliderLayer:
     serializedVersion: 2
