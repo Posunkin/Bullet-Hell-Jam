@@ -4,6 +4,7 @@ using Zenject;
 public enum RoomType
 {
     Basic,
+    Challenge,
     Boss
 }
 

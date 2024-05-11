@@ -7,6 +7,7 @@ using Zenject;
 public class RoomPlacer : MonoBehaviour
 {
     [SerializeField] private Room[] _roomPrefabs;
+    [SerializeField] private Room[] _challengeRoomPrefabs;
     [SerializeField] private Room _bossRoomPrefab;
     [SerializeField] private Room _startingRoom;
     [SerializeField] private int _levelSize;
@@ -15,9 +16,6 @@ public class RoomPlacer : MonoBehaviour
     private IInstantiator _instantiator;
 
     private int _maxX, _maxY, _mid;
-    private float _distanceToFarestRoom;
-    private Vector2Int _farestRoomPos;
-    private Room _farestRoom;
 
     [Inject]
     private void Construct(IInstantiator instantiator)
@@ -35,6 +33,11 @@ public class RoomPlacer : MonoBehaviour
 
         for (int i = 0; i < _levelSize; i++)
         {
+            if (i == _levelSize - 2)
+            {
+                PlaceChallengeRoom();
+                break;
+            }
             PlaceNewRoom();
             yield return new WaitForSeconds(0.5f);
         }
@@ -46,7 +49,7 @@ public class RoomPlacer : MonoBehaviour
             {
                 if (_spawnedRooms[x, y] != null)
                 {
-                    ConnectToNeighbours(_spawnedRooms[x, y], _spawnedRooms[x,y].Position);
+                    ConnectToNeighbours(_spawnedRooms[x, y], _spawnedRooms[x, y].Position);
                 }
             }
         }
@@ -54,40 +57,46 @@ public class RoomPlacer : MonoBehaviour
 
     private void PlaceNewRoom()
     {
-        HashSet<Vector2Int> vacantPlaces = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> vacantPlaces = GetVacantPlaces();
+        Room newRoom;
+        Vector2Int position = vacantPlaces.ElementAt(Random.Range(0, vacantPlaces.Count));
+        newRoom = _instantiator.InstantiatePrefabForComponent<Room>(_roomPrefabs[Random.Range(0, _roomPrefabs.Length)]);
+        newRoom.transform.position = new Vector3((position.x - _mid) * 42, (position.y - _mid) * 24, 0);
+        newRoom.Position = position;
+        _spawnedRooms[position.x, position.y] = newRoom;
+    }
+
+    private void PlaceChallengeRoom()
+    {
+        HashSet<Vector2Int> vacantPlaces = GetVacantPlaces();
+        Room newRoom;
+        Vector2Int position = vacantPlaces.ElementAt(Random.Range(0, vacantPlaces.Count));
+        newRoom = _instantiator.InstantiatePrefabForComponent<Room>(_challengeRoomPrefabs[Random.Range(0, _challengeRoomPrefabs.Length)]);
+        newRoom.transform.position = new Vector3((position.x - _mid) * 42, (position.y - _mid) * 24, 0);
+        newRoom.Position = position;
+        _spawnedRooms[position.x, position.y] = newRoom;
+    }
+
+    private void PlaceBossRoom()
+    {
+    }
+
+    private HashSet<Vector2Int> GetVacantPlaces()
+    {
+        HashSet<Vector2Int> places = new HashSet<Vector2Int>();
         for (int x = 0; x < _spawnedRooms.GetLength(0); x++)
         {
             for (int y = 0; y < _spawnedRooms.GetLength(1); y++)
             {
                 if (_spawnedRooms[x, y] == null) continue;
 
-                if (x > 0 && _spawnedRooms[x - 1, y] == null) vacantPlaces.Add(new Vector2Int(x - 1, y));
-                if (y > 0 && _spawnedRooms[x, y - 1] == null) vacantPlaces.Add(new Vector2Int(x, y - 1));
-                if (x < _maxX && _spawnedRooms[x + 1, y] == null) vacantPlaces.Add(new Vector2Int(x + 1, y));
-                if (y < _maxY && _spawnedRooms[x, y + 1] == null) vacantPlaces.Add(new Vector2Int(x, y + 1));
+                if (x > 0 && _spawnedRooms[x - 1, y] == null) places.Add(new Vector2Int(x - 1, y));
+                if (y > 0 && _spawnedRooms[x, y - 1] == null) places.Add(new Vector2Int(x, y - 1));
+                if (x < _maxX && _spawnedRooms[x + 1, y] == null) places.Add(new Vector2Int(x + 1, y));
+                if (y < _maxY && _spawnedRooms[x, y + 1] == null) places.Add(new Vector2Int(x, y + 1));
             }
         }
-        Room newRoom;
-        Vector2Int position = vacantPlaces.ElementAt(Random.Range(0, vacantPlaces.Count));
-        newRoom = _instantiator.InstantiatePrefabForComponent<Room>(_roomPrefabs[Random.Range(0, _roomPrefabs.Length)]);
-        newRoom.transform.position = new Vector3((position.x - _mid) * 42, (position.y - _mid) * 24, 0);
-        newRoom.Position = position;
-        float distance = Vector3.Distance(_startingRoom.transform.position, newRoom.transform.position); 
-        if (distance > _distanceToFarestRoom)
-        {
-            _distanceToFarestRoom = distance;
-            _farestRoom = newRoom;
-            _farestRoomPos = position;
-        }
-        _spawnedRooms[position.x, position.y] = newRoom;
-    }
-
-    private void PlaceBossRoom()
-    {
-        Room bossRoom = Instantiate(_bossRoomPrefab);
-        bossRoom.transform.position = _farestRoom.transform.position;
-        _farestRoom.gameObject.SetActive(false);
-        ConnectToNeighbours(bossRoom, _farestRoomPos);
+        return places;
     }
 
     private void ConnectToNeighbours(Room room, Vector2Int p)
