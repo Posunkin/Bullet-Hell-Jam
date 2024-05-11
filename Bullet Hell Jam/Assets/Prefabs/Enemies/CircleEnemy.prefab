@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e5d2a597d7749ab978706e1c9f352b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 6390361372356789153}
+  _weapon: {fileID: 6408168828967372867}
   _needToRotateWeapon: 0
   _enemy: {fileID: 1869102888997371282}
 --- !u!1 &6486696375795729323
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 6446536633810396828}
   - component: {fileID: 4126980499688781182}
   - component: {fileID: 8855463009295486518}
-  - component: {fileID: 6390361372356789153}
+  - component: {fileID: 6408168828967372867}
   m_Layer: 6
   m_Name: Weapon
   m_TagString: Untagged
@@ -5065,7 +5065,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &6390361372356789153
+--- !u!114 &6408168828967372867
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5074,14 +5074,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6486696375795729323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae5ed50b851f64ec3af2524ece186fad, type: 3}
+  m_Script: {fileID: 11500000, guid: a77666d712f41494eb94d042ca331eae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 8
+  _damage: 1
+  _speed: 10
+  _fireRate: 1
+  _numOfBullets: 8
   _lifeTime: 5
   _size: 0.4
-  _fireRate: 0.5
-  _numOfBullets: 8
   _shapeEnable: 1
   _bulletVisual: {fileID: 2100000, guid: 81fa2d61e258946adaf0fa8b1b45801f, type: 2}
   _colliderLayer:

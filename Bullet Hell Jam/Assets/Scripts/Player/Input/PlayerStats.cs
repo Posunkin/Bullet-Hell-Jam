@@ -8,4 +8,9 @@ public class PlayerStats : MonoBehaviour, IDamageable
     {
 
     }
+
+    private void OnTrigerEnter2D(Collider2D other)
+    {
+        Debug.Log("Collision with + " + other.gameObject.name);
+    }
 }
