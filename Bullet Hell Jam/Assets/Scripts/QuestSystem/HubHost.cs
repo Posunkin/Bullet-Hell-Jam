@@ -80,19 +80,16 @@ public class HubHost : MonoBehaviour, IQuestable
 
     public void DialogueEnded(int index)
     {
-        if (_dialogueIndex < _currentDialogue.Length - 1)
+        if (index == 0)
+        {
+            _dialogueEnded = true;
+            _dialogueMarker.enabled = false;
+            _input.Disable();
+            _portal.gameObject.SetActive(true);
+        }
+        else if (_dialogueIndex < _currentDialogue.Length - 1)
         {
             _dialogueIndex++;
         }
-        else
-        {
-            if (index == 0)
-            {
-                _dialogueEnded = true;
-                _dialogueMarker.enabled = false;
-                _input.Disable();
-                _portal.gameObject.SetActive(true);
-            }
-        }
-    } 
+    }
 }

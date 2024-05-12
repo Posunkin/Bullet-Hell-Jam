@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _dashSpeed;
     [SerializeField] private float _dashDuration;
     [SerializeField] private float _dashCD;
+    [SerializeField] private PlayerStatsSO _stats;
     private bool _isDashing = false;
     private bool _dashOnCD = false;
 
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
         _anim = GetComponent<Animator>();
         _weapon = GetComponentInChildren<ActiveWeapon>();
         _playerInput = new PlayerInput();
+        _dashCD = _stats.DashCD;
         _dashCDSeconds = new WaitForSeconds(_dashCD);
         _dashDurationSeconds = new WaitForSeconds(_dashDuration);
         _dialogueSystem.DialogueStarted += DisableInput;

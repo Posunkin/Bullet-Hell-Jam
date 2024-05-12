@@ -73,10 +73,12 @@ public class QuestCharacter : MonoBehaviour, IQuestable
         if (index == _goodChoice)
         {
             Loot key = Instantiate(_arifactPrefab, null);
+            _input.Disable();
             key.transform.position = new Vector2(transform.position.x + 3, transform.position.y - 3);
         }
         else
         {
+            _input.Disable();
             _room.EnterQuestRoom();
             Destroy(gameObject);
         }

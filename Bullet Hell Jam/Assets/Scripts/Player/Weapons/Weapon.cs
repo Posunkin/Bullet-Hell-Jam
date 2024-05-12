@@ -1,14 +1,23 @@
 using System.Collections;
 using UnityEngine;
 
+public enum PlayerWeaponType
+{
+    Pistol,
+    Shotgun
+}
+
 public class Weapon : MonoBehaviour, IShootable
 {
+
     [Header("Weapon parameters:")]
     [SerializeField] private float _damage;
     [SerializeField] private float _speed;
     [SerializeField] private float _lifeTime;
     [SerializeField] private float _size;
     [SerializeField] private float _fireDelayPres;
+    [SerializeField] private PlayerWeaponType _weaponType;
+    [SerializeField] private PlayerStatsSO _stats;
     private WaitForSeconds _fireDelay;
 
     [Header("Particles parameters:")]
@@ -24,6 +33,17 @@ public class Weapon : MonoBehaviour, IShootable
 
     private void Start()
     {
+        switch (_weaponType)
+        {
+            case PlayerWeaponType.Pistol:
+                _damage = _stats.PistolDamage;
+                _fireDelayPres = _stats.PistolDelay;
+                break;
+            case PlayerWeaponType.Shotgun:
+                _damage = _stats.ShotgunDamage;
+                _fireDelayPres = _stats.ShotgunDelay;
+                break;
+        }
         _fireDelay = new WaitForSeconds(_fireDelayPres);
         _sprite = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();

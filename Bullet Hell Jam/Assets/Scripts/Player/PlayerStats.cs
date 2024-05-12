@@ -11,6 +11,7 @@ public class PlayerStats : MonoBehaviour, IDamageable
     [SerializeField] private bool _cantDie;
     [SerializeField] private PlayerUI _playerUI;
     [SerializeField] private Material _damageMat;
+    [SerializeField] private PlayerStatsSO _stats;
     private SpriteRenderer _sprite;
     private Material _originalMat;
     private float _currentHealth;
@@ -25,6 +26,7 @@ public class PlayerStats : MonoBehaviour, IDamageable
         HaveKey = false;
         _playerController = GetComponent<PlayerController>();
         _sprite = GetComponent<SpriteRenderer>();
+        _maxHealth = _stats.MaxHealth;
         _currentHealth = _maxHealth;
         _healthBar.SetHealth(_maxHealth);
         _cantTakeDamageWait = new WaitForSeconds(_cantTakeDamageTime);

@@ -7,6 +7,7 @@ public class DialogueSystemInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.Bind<DialogueSystem>().FromInstance(_dialogueSystem).AsSingle().NonLazy();
+        DialogueSystem dialogueSystem = Container.InstantiatePrefabForComponent<DialogueSystem>(_dialogueSystem);
+        Container.Bind<DialogueSystem>().FromInstance(dialogueSystem).AsSingle().NonLazy();
     }
 }

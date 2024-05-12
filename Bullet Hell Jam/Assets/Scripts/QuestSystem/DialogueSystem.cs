@@ -24,6 +24,7 @@ public class DialogueSystem : MonoBehaviour
 
     private void Start()
     {
+        _lastChoiceIndex = -1;
         _dialoguePanel.gameObject.SetActive(false);
         foreach (var choice in _choicesButtons)
         {

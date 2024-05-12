@@ -1,0 +1,90 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETStandard,Version=v2.1": {
+      "Ink-Libraries/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "compile": {
+          "bin/placeholder/Ink-Libraries.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Ink-Libraries.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Ink-Libraries/1.0.0": {
+      "type": "project",
+      "path": "Ink-Libraries.csproj",
+      "msbuildProject": "Ink-Libraries.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETStandard,Version=v2.1": [
+      "Ink-Libraries >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/Users/vlad/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/Users/vlad/Documents/Unity Learning/Unity Projects/Bullet-Hell-Jam/Bullet Hell Jam/InkEditor.csproj",
+      "projectName": "InkEditor",
+      "projectPath": "/Users/vlad/Documents/Unity Learning/Unity Projects/Bullet-Hell-Jam/Bullet Hell Jam/InkEditor.csproj",
+      "packagesPath": "/Users/vlad/.nuget/packages/",
+      "outputPath": "/Users/vlad/Documents/Unity Learning/Unity Projects/Bullet-Hell-Jam/Bullet Hell Jam/Temp/obj/Debug/InkEditor/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/Users/vlad/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "netstandard2.1"
+      ],
+      "sources": {
+        "/usr/local/share/dotnet/library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "projectReferences": {
+            "/Users/vlad/Documents/Unity Learning/Unity Projects/Bullet-Hell-Jam/Bullet Hell Jam/Ink-Libraries.csproj": {
+              "projectPath": "/Users/vlad/Documents/Unity Learning/Unity Projects/Bullet-Hell-Jam/Bullet Hell Jam/Ink-Libraries.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      }
+    },
+    "frameworks": {
+      "netstandard2.1": {
+        "targetAlias": "netstandard2.1",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.204/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
