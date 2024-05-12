@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class ActiveWeapon : MonoBehaviour
 {
-    private Weapon _currentWeapon;
+    [SerializeField] private Weapon _currentWeapon;
     private PlayerInput _input;
     private bool _shooting = false;
 
     private void Awake()
     {
         _input = new PlayerInput();
-        _currentWeapon = GetComponentInChildren<Weapon>();
     }
 
     private void Start()

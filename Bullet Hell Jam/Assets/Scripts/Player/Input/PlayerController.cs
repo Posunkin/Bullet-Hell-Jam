@@ -18,10 +18,16 @@ public class PlayerController : MonoBehaviour
     private PlayerInput _playerInput;
     private Vector2 _movement;
     private Rigidbody2D _rb;
+    private SpriteRenderer _sprite;
+    private Animator _anim;
+    private ActiveWeapon _weapon;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _anim = GetComponent<Animator>();
+        _sprite = GetComponent<SpriteRenderer>();
+        _weapon = GetComponentInChildren<ActiveWeapon>();
         _playerInput = new PlayerInput();
         _dashCDSeconds = new WaitForSeconds(_dashCD);
         _dashDurationSeconds = new WaitForSeconds(_dashDuration);
@@ -42,6 +48,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         GetInputs();
+        ChangeFaceDirection();
     }
 
     private void FixedUpdate()
@@ -53,6 +60,25 @@ public class PlayerController : MonoBehaviour
     private void GetInputs()
     {
         _movement = _playerInput.Movement.Move.ReadValue<Vector2>();
+        _anim.SetFloat("MoveX", _movement.x);
+        _anim.SetFloat("MoveY", _movement.y);
+    }
+
+    private void ChangeFaceDirection()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 screenToPoint = Camera.main.WorldToScreenPoint(transform.position);
+
+        if (mousePos.x < screenToPoint.x)
+        {
+            _sprite.flipX = true;
+            _weapon.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            _weapon.transform.rotation = Quaternion.Euler(0, 0, 0);
+            _sprite.flipX = false;
+        }
     }
 
     private void Move()

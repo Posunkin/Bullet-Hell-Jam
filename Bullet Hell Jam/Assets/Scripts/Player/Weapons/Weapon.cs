@@ -12,17 +12,21 @@ public class Weapon : MonoBehaviour, IShootable
     private WaitForSeconds _fireDelay;
 
     [Header("Particles parameters:")]
+    [SerializeField] private ParticleSystem _system;
+    [SerializeField] private MuzzlePoint _muzzlePoint;
     [SerializeField] private Material _bulletVisual;
     [SerializeField] private LayerMask _colliderLayer;
 
-    private ParticleSystem _system;
+    private SpriteRenderer _sprite;
+    private Animator _anim;
     private bool _shooting = false;
     private Camera _camera;
 
     private void Start()
     {
         _fireDelay = new WaitForSeconds(_fireDelayPres);
-        _system = GetComponent<ParticleSystem>();
+        _sprite = GetComponent<SpriteRenderer>();
+        _anim = GetComponent<Animator>();
         _camera = Camera.main;
         Initialize();
     }
@@ -30,6 +34,7 @@ public class Weapon : MonoBehaviour, IShootable
     private void Update()
     {
         RotateWeapon();
+        RotateMuzzlePoint();
     }
 
     public void Shoot()
@@ -40,13 +45,34 @@ public class Weapon : MonoBehaviour, IShootable
 
     private void RotateWeapon()
     {
-        Vector2 mousePos = _camera.ScreenToWorldPoint(position: Input.mousePosition);
-        transform.LookAt(mousePos);
+        Vector3 mouse = Input.mousePosition;
+        Vector3 screenToPoint = Camera.main.WorldToScreenPoint(transform.position);
+        if (mouse.x < screenToPoint.x)
+        {
+            _sprite.flipX = true;
+        }
+        else
+        {
+            _sprite.flipX = false;
+        }
+        Vector2 pos = _camera.ScreenToWorldPoint(mouse);
+        transform.LookAt(pos);
+        Quaternion rot = transform.rotation;
+        rot.x = 0;
+        rot.y = 0;
+        transform.rotation = rot;
+    }
+
+    private void RotateMuzzlePoint()
+    {
+        Vector2 pos = _camera.ScreenToWorldPoint(Input.mousePosition);
+        _system.transform.LookAt(pos);
     }
 
     private void EmitParticle()
     {
         _system.Play();
+        _anim.SetTrigger("Shoot");
         StartCoroutine(ShootingRoutine());
     }
 
@@ -61,6 +87,7 @@ public class Weapon : MonoBehaviour, IShootable
 
     private void Initialize()
     {
+        _muzzlePoint.Init(_damage);
         ChangeParameters(_system);
         _system.Stop();
     }
@@ -73,9 +100,6 @@ public class Weapon : MonoBehaviour, IShootable
         mainModule.startSize = _size;
         mainModule.startSpeed = _speed;
 
-        var form = system.shape;
-        form.enabled = false;
-
         var rend = system.GetComponent<ParticleSystemRenderer>();
         rend.material = _bulletVisual;
 
@@ -86,13 +110,5 @@ public class Weapon : MonoBehaviour, IShootable
         collision.lifetimeLoss = 1;
         collision.sendCollisionMessages = true;
         collision.collidesWith = _colliderLayer;
-    }
-
-    private void OnParticleCollision(GameObject other)
-    {
-        if (other.TryGetComponent<IDamageable>(out IDamageable target))
-        {
-            target.TakeDamage(_damage);
-        }
     }
 }
