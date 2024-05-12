@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     private PlayerInput _playerInput;
     private Vector2 _movement;
     private Rigidbody2D _rb;
-    private SpriteRenderer _sprite;
     private Animator _anim;
     private ActiveWeapon _weapon;
     private DialogueSystem _dialogueSystem;
@@ -35,7 +34,6 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-        _sprite = GetComponent<SpriteRenderer>();
         _weapon = GetComponentInChildren<ActiveWeapon>();
         _playerInput = new PlayerInput();
         _dashCDSeconds = new WaitForSeconds(_dashCD);
@@ -83,13 +81,17 @@ public class PlayerController : MonoBehaviour
 
         if (mousePos.x < screenToPoint.x)
         {
-            _sprite.flipX = true;
+            Quaternion rot = transform.rotation;
+            rot.y = 180;
+            transform.rotation = rot;
             _weapon.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else
         {
+            Quaternion rot = transform.rotation;
+            rot.y = 0;
+            transform.rotation = rot;
             _weapon.transform.rotation = Quaternion.Euler(0, 0, 0);
-            _sprite.flipX = false;
         }
     }
 

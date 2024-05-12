@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 971066258695183851}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.87, y: -0.24, z: 0}
+  m_LocalPosition: {x: 0.364, y: -0.191, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4947,7 +4947,7 @@ GameObject:
   - component: {fileID: 249376496351201065}
   - component: {fileID: 675569219772953400}
   m_Layer: 3
-  m_Name: ShotgunWeapon
+  m_Name: PistolWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4962,8 +4962,8 @@ Transform:
   m_GameObject: {fileID: 8551682634975060616}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.75, y: -0.32, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.03, y: -0.249, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4573146046408159484}
@@ -5009,7 +5009,7 @@ SpriteRenderer:
   m_SortingLayerID: -1993081763
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -985908562, guid: 284fa914fb2fc4787baa6cfe3d43ba84, type: 3}
+  m_Sprite: {fileID: -515501447, guid: 284fa914fb2fc4787baa6cfe3d43ba84, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

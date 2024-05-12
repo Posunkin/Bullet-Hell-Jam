@@ -27,7 +27,7 @@ public class BossRoomTrigger : RoomTrigger
         while (_playerEnteringRoom)
         {
             float dist = Vector2.Distance(_player.gameObject.transform.position, _room.RoomCenter.position);
-            if (dist <= 8)
+            if (dist <= 10)
             {
                 _room.EnterBossRoom();
                 _playerEnteringRoom = false;
