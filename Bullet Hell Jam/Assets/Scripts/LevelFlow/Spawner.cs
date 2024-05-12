@@ -4,6 +4,7 @@ using Zenject;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Enemy[] _enemyPrefabs;
+    [SerializeField] private Enemy _questEnemyPrefab;
     private IInstantiator _instantiator;
 
     private int _enemyCount;
@@ -38,7 +39,14 @@ public class Spawner : MonoBehaviour
                 SpawnChallengeEnemies();
                 break;
         }
+    }
 
+    public void SpawnQuestEnemy(Room room, SpawnPoint[] point)
+    {
+        _currentRoom = room;
+        Enemy go = _instantiator.InstantiatePrefabForComponent<Enemy>(_questEnemyPrefab);
+        go.transform.position = point[0].transform.position;
+        go.OnEnemyDeath += QuestEnemyDied;
     }
 
     private void SpawnBasicEnemies()
@@ -73,6 +81,13 @@ public class Spawner : MonoBehaviour
             _rewardSpawner.SpawnBaseReward(_currentRoom.RoomCenter);
             _currentRoom.OpenTheDoors();
         }
+    }
+
+    private void QuestEnemyDied(Enemy enemy)
+    {
+        _rewardSpawner.SpawnQuestReward(_currentRoom.RoomCenter);
+        enemy.OnEnemyDeath -= QuestEnemyDied;
+        _currentRoom.OpenTheDoors();
     }
 
     private void EnemyDiedChallenge(Enemy enemy)

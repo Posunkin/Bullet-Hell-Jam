@@ -10,6 +10,7 @@ public class RoomPlacer : MonoBehaviour
     [SerializeField] private Room[] _challengeRoomPrefabs;
     [SerializeField] private Room _bossRoomPrefab;
     [SerializeField] private Room _startingRoom;
+    [SerializeField] private Room _questRoomPrefab;
     [SerializeField] private int _levelSize;
 
     private Room[,] _spawnedRooms;
@@ -33,10 +34,14 @@ public class RoomPlacer : MonoBehaviour
 
         for (int i = 0; i < _levelSize; i++)
         {
-            Debug.Log(i);
-            if (i == _levelSize - 2)
+            if (i == _levelSize - 3)
             {
                 PlaceChallengeRoom();
+                continue;
+            }
+            if (i == _levelSize - 2)
+            {
+                PlaceQuestRoom();
                 continue;
             }
             if (i == _levelSize - 1)
@@ -90,6 +95,17 @@ public class RoomPlacer : MonoBehaviour
         bossRoom.transform.position = new Vector3((position.x - _mid) * 42, (position.y - _mid) * 24, 0);
         bossRoom.Position = position;
         _spawnedRooms[position.x, position.y] = bossRoom;
+    }
+
+    private void PlaceQuestRoom()
+    {
+        HashSet<Vector2Int> vacantPlaces = GetVacantPlaces();
+        Room newRoom;
+        Vector2Int position = vacantPlaces.ElementAt(Random.Range(0, vacantPlaces.Count));
+        newRoom = _instantiator.InstantiatePrefabForComponent<Room>(_questRoomPrefab);
+        newRoom.transform.position = new Vector3((position.x - _mid) * 42, (position.y - _mid) * 24, 0);
+        newRoom.Position = position;
+        _spawnedRooms[position.x, position.y] = newRoom;
     }
 
     private HashSet<Vector2Int> GetVacantPlaces()

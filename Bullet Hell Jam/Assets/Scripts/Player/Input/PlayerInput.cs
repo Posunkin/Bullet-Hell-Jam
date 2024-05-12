@@ -142,6 +142,34 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Dialogue"",
+            ""id"": ""e751f297-915c-4d88-aa8a-944eb159e40a"",
+            ""actions"": [
+                {
+                    ""name"": ""Speak"",
+                    ""type"": ""Button"",
+                    ""id"": ""76bfe3c7-4e3f-4df3-8cbe-09b5d9b2f417"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a5293163-bd7c-4421-a17a-416747d67f7f"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Speak"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -153,6 +181,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // Combat
         m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
         m_Combat_Shoot = m_Combat.FindAction("Shoot", throwIfNotFound: true);
+        // Dialogue
+        m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
+        m_Dialogue_Speak = m_Dialogue.FindAction("Speak", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -310,6 +341,52 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public CombatActions @Combat => new CombatActions(this);
+
+    // Dialogue
+    private readonly InputActionMap m_Dialogue;
+    private List<IDialogueActions> m_DialogueActionsCallbackInterfaces = new List<IDialogueActions>();
+    private readonly InputAction m_Dialogue_Speak;
+    public struct DialogueActions
+    {
+        private @PlayerInput m_Wrapper;
+        public DialogueActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Speak => m_Wrapper.m_Dialogue_Speak;
+        public InputActionMap Get() { return m_Wrapper.m_Dialogue; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DialogueActions set) { return set.Get(); }
+        public void AddCallbacks(IDialogueActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DialogueActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Add(instance);
+            @Speak.started += instance.OnSpeak;
+            @Speak.performed += instance.OnSpeak;
+            @Speak.canceled += instance.OnSpeak;
+        }
+
+        private void UnregisterCallbacks(IDialogueActions instance)
+        {
+            @Speak.started -= instance.OnSpeak;
+            @Speak.performed -= instance.OnSpeak;
+            @Speak.canceled -= instance.OnSpeak;
+        }
+
+        public void RemoveCallbacks(IDialogueActions instance)
+        {
+            if (m_Wrapper.m_DialogueActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDialogueActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DialogueActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DialogueActions @Dialogue => new DialogueActions(this);
     public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -318,5 +395,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface ICombatActions
     {
         void OnShoot(InputAction.CallbackContext context);
+    }
+    public interface IDialogueActions
+    {
+        void OnSpeak(InputAction.CallbackContext context);
     }
 }

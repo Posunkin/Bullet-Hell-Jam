@@ -5,7 +5,8 @@ public enum RoomType
 {
     Basic,
     Challenge,
-    Boss
+    Boss,
+    Quest
 }
 
 public class Room : MonoBehaviour
@@ -33,6 +34,11 @@ public class Room : MonoBehaviour
     private bool _roomVisited;
     private Spawner _spawner;
 
+    private void Start()
+    {
+        if (Type == RoomType.Quest) _roomVisited = true;
+    }
+
     [Inject]
     private void Construct(Spawner spawner)
     {
@@ -56,6 +62,12 @@ public class Room : MonoBehaviour
         CloseTheDoors();
         _roomVisited = true;
         _spawner.SpawnEnemies(this, _spawnPoints);
+    }
+
+    public void EnterQuestRoom()
+    {
+        CloseTheDoors();
+        _spawner.SpawnQuestEnemy(this, _spawnPoints);
     }
 
     private void SetCamera()

@@ -8,6 +8,7 @@ public class PlayerStats : MonoBehaviour, IDamageable
     [SerializeField] private float _maxHealth;
     [SerializeField] private HealthBar _healthBar;
     [SerializeField] private bool _cantDie;
+    [SerializeField] private PlayerUI _playerUI;
     private float _currentHealth;
     private PlayerController _playerController;
     private Wallet _wallet;
@@ -49,6 +50,7 @@ public class PlayerStats : MonoBehaviour, IDamageable
                     break;
                 case LootType.Key:
                     HaveKey = true;
+                    _playerUI.ArtifactMessage();
                     Destroy(other.gameObject);
                     break;
             }            

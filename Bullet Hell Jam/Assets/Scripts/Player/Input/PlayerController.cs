@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class PlayerController : MonoBehaviour
 {
     public bool IsDashing { get => _isDashing; }
+    public PlayerInput CurrentInput { get => _playerInput; }
     [Header("Movement parameters:")]
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _dashSpeed;
@@ -21,6 +23,13 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer _sprite;
     private Animator _anim;
     private ActiveWeapon _weapon;
+    private DialogueSystem _dialogueSystem;
+
+    [Inject]
+    private void Construct(DialogueSystem dialogueSystem)
+    {
+        _dialogueSystem = dialogueSystem;
+    }
 
     private void Awake()
     {
@@ -31,6 +40,8 @@ public class PlayerController : MonoBehaviour
         _playerInput = new PlayerInput();
         _dashCDSeconds = new WaitForSeconds(_dashCD);
         _dashDurationSeconds = new WaitForSeconds(_dashDuration);
+        _dialogueSystem.DialogueStarted += DisableInput;
+        _dialogueSystem.DialogueEnded += EnableInput;
     }
 
     private void OnEnable()
@@ -64,6 +75,7 @@ public class PlayerController : MonoBehaviour
         _anim.SetFloat("MoveY", _movement.y);
     }
 
+    #region Movement
     private void ChangeFaceDirection()
     {
         Vector3 mousePos = Input.mousePosition;
@@ -85,7 +97,9 @@ public class PlayerController : MonoBehaviour
     {
         _rb.MovePosition(_rb.position + _movement * (_moveSpeed * Time.fixedDeltaTime));
     }
+    #endregion
 
+    #region Dash
     private void Dash()
     {
         if (!_dashOnCD)
@@ -104,4 +118,17 @@ public class PlayerController : MonoBehaviour
         yield return _dashCDSeconds;
         _dashOnCD = false;
     }
+    #endregion
+
+    #region For the dialogue
+    private void DisableInput()
+    {
+        _playerInput.Disable();
+    }
+
+    private void EnableInput()
+    {
+        _playerInput.Enable();
+    }
+    #endregion
 }

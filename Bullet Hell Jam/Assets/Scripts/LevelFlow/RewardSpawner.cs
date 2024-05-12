@@ -4,6 +4,7 @@ public class RewardSpawner : MonoBehaviour
 {
     [SerializeField] private Loot[] _lootPrefabs;
     [SerializeField] private Loot[] _specialLootPrefabs;
+    [SerializeField] private Loot _questRewardPrefab;
 
     public void SpawnBaseReward(Transform room)
     {
@@ -12,6 +13,12 @@ public class RewardSpawner : MonoBehaviour
             Loot go = Instantiate(_lootPrefabs[Random.Range(0, _lootPrefabs.Length)]);
             go.transform.position = room.position;
         }
+    }
+
+    public void SpawnQuestReward(Transform room)
+    {
+        Loot go = Instantiate(_questRewardPrefab);
+        go.transform.position = room.position;
     }
 
     public void SpawnChallengeReward(Transform room)

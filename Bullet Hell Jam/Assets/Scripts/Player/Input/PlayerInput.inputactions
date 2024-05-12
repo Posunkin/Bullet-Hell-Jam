@@ -120,6 +120,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Dialogue",
+            "id": "e751f297-915c-4d88-aa8a-944eb159e40a",
+            "actions": [
+                {
+                    "name": "Speak",
+                    "type": "Button",
+                    "id": "76bfe3c7-4e3f-4df3-8cbe-09b5d9b2f417",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a5293163-bd7c-4421-a17a-416747d67f7f",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Speak",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
