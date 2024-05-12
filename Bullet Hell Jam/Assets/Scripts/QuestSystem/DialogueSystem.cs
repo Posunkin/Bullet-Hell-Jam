@@ -19,7 +19,7 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] _choicesText;
 
     private Story _currentStory;
-    private QuestCharacter _currentCharacter;
+    private IQuestable _currentCharacter;
     private int _lastChoiceIndex;
 
     private void Start()
@@ -31,7 +31,7 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    public void StartDialogue(TextAsset story, QuestCharacter character)
+    public void StartDialogue(TextAsset story, IQuestable character)
     {
         _currentStory = new Story(story.text);
         _currentCharacter = character;

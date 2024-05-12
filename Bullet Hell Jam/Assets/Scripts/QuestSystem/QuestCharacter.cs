@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class QuestCharacter : MonoBehaviour
+public class QuestCharacter : MonoBehaviour, IQuestable
 {
     [SerializeField] private SpriteRenderer _dialogueMarker;
 
