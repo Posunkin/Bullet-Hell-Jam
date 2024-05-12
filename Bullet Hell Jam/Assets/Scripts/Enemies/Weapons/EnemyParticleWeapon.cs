@@ -12,14 +12,15 @@ public class EnemyParticleWeapon : EnemyWeapon
     [SerializeField] private AnimationCurve _curve;
 
     [Header("Visual parameters:")]
+    [SerializeField] private ParticleSystem _system;
     [SerializeField] private Material _bulletVisual;
     [SerializeField] private LayerMask _colliderLayer;
-
-    private ParticleSystem _system;
+    [SerializeField] private MuzzlePoint _muzzlePoint;
 
     private void Start()
     {
         _container = gameObject.transform.parent;
+        _muzzlePoint.Init(_damage);
         StartCoroutine(PredelayRoutine());
         _fireDelay = new WaitForSeconds(_fireRate);
         Initialize();
@@ -27,7 +28,6 @@ public class EnemyParticleWeapon : EnemyWeapon
 
     private void Initialize()
     {
-        _system = GetComponent<ParticleSystem>();
         var mainModule = _system.main;
         mainModule.simulationSpace = ParticleSystemSimulationSpace.World;
         mainModule.startLifetime = _lifeTime;

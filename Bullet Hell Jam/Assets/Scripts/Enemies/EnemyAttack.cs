@@ -6,8 +6,10 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] private EnemyWeapon _weapon;
     [SerializeField] private bool _needToRotateWeapon;
     [SerializeField] private Enemy _enemy;
+    [SerializeField] private SpriteRenderer _sprite;
     private PlayerStats _player;
     private bool _enemyAlive = true;
+    private bool _weaponFlipped;
 
     private void Start()
     {
@@ -22,7 +24,10 @@ public class EnemyAttack : MonoBehaviour
     
     private void Update()
     {
-        if (_needToRotateWeapon) RotateWeapon();
+        if (_needToRotateWeapon)
+        {
+            RotateWeapon();
+        } 
         if (_enemyAlive) _weapon.Shoot();
     }
 
@@ -30,12 +35,31 @@ public class EnemyAttack : MonoBehaviour
     {
         if (_player == null) return;
         Vector2 playerPos = _player.transform.position;
+        if (transform.position.x > playerPos.x)
+        {
+            _weaponFlipped = true;
+        }
+        else
+        {
+            _weaponFlipped = false;
+        }
         transform.LookAt(playerPos);
+        Quaternion weaponRotation;
+        if (_weaponFlipped)
+        {
+            weaponRotation = Quaternion.Euler(0, 180, -transform.rotation.eulerAngles.x);
+        }
+        else
+        {
+            weaponRotation = Quaternion.Euler(0, 0, -transform.rotation.eulerAngles.x);
+        }
+        _weapon.transform.rotation = weaponRotation;
     }
 
     private void EnemyDied(Enemy enemy)
     {
         transform.parent = null;
+        _sprite.enabled = false;
         _enemyAlive = false;
         enemy.OnEnemyDeath -= EnemyDied;
         _weapon.StopShooting();
