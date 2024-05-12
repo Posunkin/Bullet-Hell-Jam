@@ -14,13 +14,13 @@ public class Movement
         _moveSpeed = moveSpeed;
     }
 
-    public void MoveToPosition()
+    public void MoveToPosition(Vector2 pos)
     {
-        _rb.MovePosition(_rb.position + _newPos * (_moveSpeed * Time.fixedDeltaTime));
+        _rb.MovePosition(_rb.position + pos * (_moveSpeed * Time.fixedDeltaTime));
     }
 
-    public void GetPatrolPosition()
+    public Vector2 GetPatrolPosition()
     {
-        _newPos = new Vector2(Random.Range(-1, 2), Random.Range(-1, 2));
+       return _newPos = new Vector2(Random.Range(-1, 2), Random.Range(-1, 2));
     }
 }

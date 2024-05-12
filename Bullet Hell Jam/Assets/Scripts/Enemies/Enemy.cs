@@ -6,10 +6,12 @@ public class Enemy : MonoBehaviour, IDamageable
     public Action<Enemy> OnEnemyDeath;
     [SerializeField] private float _maxHealth;
     private float _currentHealth;
+    private Animator _anim;
 
     private void Start()
     {
         _currentHealth = _maxHealth;
+        _anim = GetComponent<Animator>();
     }
 
     public void TakeDamage(float damage)
@@ -18,7 +20,12 @@ public class Enemy : MonoBehaviour, IDamageable
         if (_currentHealth <= 0)
         {
             OnEnemyDeath?.Invoke(this);
-            Destroy(gameObject, 0.2f);
+            _anim.SetTrigger("Death");
         }
+    }
+
+    private void Death()
+    {
+        Destroy(gameObject);
     }
 }

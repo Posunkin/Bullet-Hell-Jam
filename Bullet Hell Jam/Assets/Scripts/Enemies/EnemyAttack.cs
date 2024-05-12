@@ -48,16 +48,24 @@ public class EnemyAttack : MonoBehaviour
         if (_weaponFlipped)
         {
             weaponRotation = Quaternion.Euler(0, 180, -transform.rotation.eulerAngles.x);
+            Quaternion rotation = _enemy.transform.rotation;
+            rotation.y = 180;
+            _enemy.transform.rotation = rotation;
         }
         else
         {
             weaponRotation = Quaternion.Euler(0, 0, -transform.rotation.eulerAngles.x);
+            Quaternion rotation = _enemy.transform.rotation;
+            rotation.y = 0;
+            _enemy.transform.rotation = rotation;
         }
+        
         _weapon.transform.rotation = weaponRotation;
     }
 
     private void EnemyDied(Enemy enemy)
     {
+        _needToRotateWeapon = false;
         transform.parent = null;
         _sprite.enabled = false;
         _enemyAlive = false;

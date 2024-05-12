@@ -17,8 +17,11 @@ public class EnemyParticleWeapon : EnemyWeapon
     [SerializeField] private LayerMask _colliderLayer;
     [SerializeField] private MuzzlePoint _muzzlePoint;
 
+    private Animator _anim;
+
     private void Start()
     {
+        _anim = GetComponent<Animator>();
         _container = gameObject.transform.parent;
         _muzzlePoint.Init(_damage);
         StartCoroutine(PredelayRoutine());
@@ -67,6 +70,7 @@ public class EnemyParticleWeapon : EnemyWeapon
         if (_canShoot)
         {
             _system.Play();
+            _anim.SetTrigger("Shoot");
             StartCoroutine(ShootingRoutine());
         }
     }
