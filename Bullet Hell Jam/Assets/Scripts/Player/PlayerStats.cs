@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +10,13 @@ public class PlayerStats : MonoBehaviour, IDamageable
     [SerializeField] private HealthBar _healthBar;
     [SerializeField] private bool _cantDie;
     [SerializeField] private PlayerUI _playerUI;
+    [SerializeField] private Material _damageMat;
+    private SpriteRenderer _sprite;
+    private Material _originalMat;
     private float _currentHealth;
+    private bool _cantTakeDamage = false;
+    private float _cantTakeDamageTime = 0.2f;
+    private WaitForSeconds _cantTakeDamageWait;
     private PlayerController _playerController;
     private Wallet _wallet;
 
@@ -17,8 +24,11 @@ public class PlayerStats : MonoBehaviour, IDamageable
     {
         HaveKey = false;
         _playerController = GetComponent<PlayerController>();
+        _sprite = GetComponent<SpriteRenderer>();
         _currentHealth = _maxHealth;
         _healthBar.SetHealth(_maxHealth);
+        _cantTakeDamageWait = new WaitForSeconds(_cantTakeDamageTime);
+        _originalMat = _sprite.material;
     }
 
     [Inject]
@@ -59,7 +69,7 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        if (_playerController.IsDashing || _cantDie) return;
+        if (_playerController.IsDashing || _cantDie || _cantTakeDamage) return;
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {
@@ -67,7 +77,17 @@ public class PlayerStats : MonoBehaviour, IDamageable
         }
         else
         {
+            StartCoroutine(DamageRoutine());
             _healthBar.ChangeHealth(_currentHealth);
         }
+    }
+
+    private IEnumerator DamageRoutine()
+    {
+        _cantTakeDamage = true;
+        _sprite.material = _damageMat;
+        yield return _cantTakeDamageWait;
+        _cantTakeDamage = false;
+        _sprite.material = _originalMat;
     }
 }
