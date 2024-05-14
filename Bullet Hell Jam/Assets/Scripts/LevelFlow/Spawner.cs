@@ -66,6 +66,11 @@ public class Spawner : MonoBehaviour
 
     private void SpawnBoss()
     {
+        if (_bossEnemyPrefab == null)
+        {
+            _rewardSpawner.OpenPortal(_currentRoom.RoomCenter);
+            return;
+        }
         Enemy go = _instantiator.InstantiatePrefabForComponent<Enemy>(_bossEnemyPrefab);
         go.transform.position = _spawnPoints[0].transform.position;
         go.OnEnemyDeath += BossDied;
