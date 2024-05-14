@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class QuestCharacter : MonoBehaviour, IQuestable
@@ -15,51 +16,36 @@ public class QuestCharacter : MonoBehaviour, IQuestable
 
     private bool _canStartDialogue;
 
-    private PlayerInput _input;
+    private InputAction _input;
 
     [Inject]
-    private void Construct(DialogueSystem dialogueSystem)
+    private void Construct(DialogueSystem dialogueSystem, PlayerStats player)
     {
         _dialogueSystem = dialogueSystem;
+        _input = player.GetComponent<PlayerController>().CurrentInput.Dialogue.Speak;
     }
 
     private void Awake()
     {
         _canStartDialogue = true;
         _dialogueMarker.enabled = false;
-        _input = new PlayerInput();
     }
 
-    private void OnEnable()
+    private void OnTriggerStay2D(Collider2D other)
     {
-        _input.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _input.Disable();
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.TryGetComponent<PlayerStats>(out PlayerStats player))
+        if (_canStartDialogue)
         {
-            if (_canStartDialogue)
+            _dialogueMarker.enabled = true;
+            if (_input.ReadValue<float>() > 0.5f)
             {
-                _dialogueMarker.enabled = true;
-                _input.Enable();
-                _input.Dialogue.Speak.performed += _ => Dialogue();
+                Dialogue();
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.TryGetComponent<PlayerStats>(out PlayerStats player))
-        {
-            _dialogueMarker.enabled = false;
-            _input.Disable();
-        }
+        _dialogueMarker.enabled = false;
     }
 
     private void Dialogue()
@@ -73,12 +59,10 @@ public class QuestCharacter : MonoBehaviour, IQuestable
         if (index == _goodChoice)
         {
             Loot key = Instantiate(_arifactPrefab, null);
-            _input.Disable();
             key.transform.position = new Vector2(transform.position.x + 3, transform.position.y - 3);
         }
         else
         {
-            _input.Disable();
             _room.EnterQuestRoom();
             Destroy(gameObject);
         }

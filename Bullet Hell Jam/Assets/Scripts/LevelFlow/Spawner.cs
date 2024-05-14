@@ -97,13 +97,13 @@ public class Spawner : MonoBehaviour
     private void BossDied(Enemy boss)
     {
         boss.OnEnemyDeath -= BossDied;
-        _rewardSpawner.OpenPortal();
+        _rewardSpawner.OpenPortal(_currentRoom.RoomCenter);
     }
 
     private void QuestEnemyDied(Enemy enemy)
     {
-        _rewardSpawner.SpawnQuestReward(_currentRoom.RoomCenter);
         enemy.OnEnemyDeath -= QuestEnemyDied;
+        _rewardSpawner.SpawnQuestReward(_currentRoom.RoomCenter);
         _currentRoom.OpenTheDoors();
     }
 

@@ -21,6 +21,7 @@ public class FadeTransition : MonoBehaviour
             StopCoroutine(_fadeRoutine);
         }
 
+        gameObject.SetActive(true);
         _fadeRoutine = FadeRoutine(1);
         StartCoroutine(_fadeRoutine);
     }
@@ -31,7 +32,7 @@ public class FadeTransition : MonoBehaviour
         {
             StopCoroutine(_fadeRoutine);
         }
-
+        gameObject.SetActive(true);
         _fadeRoutine = FadeRoutine(0);
         StartCoroutine(_fadeRoutine);
     }

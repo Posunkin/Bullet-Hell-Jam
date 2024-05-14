@@ -4,15 +4,15 @@ using Zenject;
 
 public class GiantGoblinAI : MovementLogic
 {
-    [SerializeField] private EnemyParticleWeapon _weapon;
+    [SerializeField] protected EnemyParticleWeapon _weapon;
     private float _shootDelay = 3;
-    private WaitForSeconds _shootWait;
-    private bool _canShoot = true;
-    private bool _attackAnimPlaying = false;
-    private Transform _player;
+    protected WaitForSeconds _shootWait;
+    protected bool _canShoot = true;
+    protected bool _attackAnimPlaying = false;
+    protected Transform _player;
 
     [Inject]
-    private void Construct(PlayerStats playerStats)
+    protected void Construct(PlayerStats playerStats)
     {
         _player = playerStats.gameObject.transform;
     }
@@ -21,7 +21,9 @@ public class GiantGoblinAI : MovementLogic
     {
         _shootWait = new WaitForSeconds(_shootDelay);
         base.Start();
+        _enemy.OnEnemyDeath += Death;
     }
+    
     protected override void Update()
     {
         if (!_hasTask) SetTask();
@@ -40,7 +42,7 @@ public class GiantGoblinAI : MovementLogic
         }
     }
 
-    private void Flip()
+    protected void Flip()
     {
         Quaternion rotate;
         if (_player.position.x < transform.position.x)
@@ -56,20 +58,26 @@ public class GiantGoblinAI : MovementLogic
         transform.rotation = rotate;
     }
 
-    private void Shoot()
+    protected void Shoot()
     {
         _weapon.Shoot();
         StartCoroutine(AttackRoutine());
     }
 
-    private IEnumerator AttackRoutine()
+    protected IEnumerator AttackRoutine()
     {
         yield return _shootWait;
         _canShoot = true;
     }
 
-    private void AttackAnimEnded()
+    protected void AttackAnimEnded()
     {
         _attackAnimPlaying = false;
+    }
+
+    protected void Death(Enemy enemy)
+    {
+        _enemy.OnEnemyDeath -= Death;
+        _weapon.StopShooting();
     }
 }

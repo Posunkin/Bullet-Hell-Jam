@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class HubHost : MonoBehaviour, IQuestable
@@ -16,13 +17,14 @@ public class HubHost : MonoBehaviour, IQuestable
     private StoryFlowHandler _storyFlowHandler;
     private TextAsset[] _currentDialogue;
 
-    private PlayerInput _input;
+    private InputAction _input;
 
     [Inject]
-    private void Construct(DialogueSystem dialogueSystem, StoryFlowHandler storyFlowHandler)
+    private void Construct(DialogueSystem dialogueSystem, StoryFlowHandler storyFlowHandler, PlayerStats player)
     {
         _dialogueSystem = dialogueSystem;
         _storyFlowHandler = storyFlowHandler;
+        _input = player.GetComponent<PlayerController>().CurrentInput.Dialogue.Speak;
     }
 
     private void Awake()
@@ -38,39 +40,23 @@ public class HubHost : MonoBehaviour, IQuestable
         _dialogueIndex = 0;
         _dialogueEnded = false;
         _dialogueMarker.enabled = false;
-        _input = new PlayerInput();
     }
 
-    private void OnEnable()
+    private void OnTriggerStay2D(Collider2D other)
     {
-        _input.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _input.Disable();
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.TryGetComponent<PlayerStats>(out PlayerStats player))
+        if (!_dialogueEnded)
         {
-            if (!_dialogueEnded)
+            _dialogueMarker.enabled = true;
+            if (_input.ReadValue<float>() > 0.5f)
             {
-                _dialogueMarker.enabled = true;
-                _input.Enable();
-                _input.Dialogue.Speak.performed += _ => Dialogue();
+                Dialogue();
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.TryGetComponent<PlayerStats>(out PlayerStats player))
-        {
-            _dialogueMarker.enabled = false;
-            _input.Disable();
-        }
+        _dialogueMarker.enabled = false;
     }
 
     private void Dialogue()
@@ -84,7 +70,6 @@ public class HubHost : MonoBehaviour, IQuestable
         {
             _dialogueEnded = true;
             _dialogueMarker.enabled = false;
-            _input.Disable();
             _portal.gameObject.SetActive(true);
         }
         else if (_dialogueIndex < _currentDialogue.Length - 1)

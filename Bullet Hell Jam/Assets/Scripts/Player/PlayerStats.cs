@@ -71,10 +71,11 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        if (_playerController.IsDashing || _cantDie || _cantTakeDamage) return;
+        if (_cantTakeDamage) return;
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {
+            if (_cantDie) return;
             Destroy(gameObject);
         }
         else

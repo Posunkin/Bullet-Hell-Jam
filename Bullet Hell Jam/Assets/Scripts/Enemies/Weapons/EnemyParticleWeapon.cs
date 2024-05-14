@@ -86,6 +86,8 @@ public class EnemyParticleWeapon : EnemyWeapon
 
     public override void StopShooting()
     {
+        transform.parent = null;
+        _muzzlePoint.transform.parent = this.transform;
         StopAllCoroutines();
         _canShoot = false;
         StartCoroutine(WaitingForParticles());
@@ -97,7 +99,8 @@ public class EnemyParticleWeapon : EnemyWeapon
         {
             yield return null;
         }
-        Destroy(_container.gameObject);
+        if (_container != null) Destroy(_container.gameObject);
+        Destroy(this.gameObject);
     }
 
     private IEnumerator ShootingRoutine()

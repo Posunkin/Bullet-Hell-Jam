@@ -31,15 +31,16 @@ public class RewardSpawner : MonoBehaviour
             if (!rewardSpawned || Random.value > 0.3f)
             {
                 Loot go = Instantiate(_specialLootPrefabs[Random.Range(0, _specialLootPrefabs.Length)]);
-                room.position = new Vector2(room.position.x + Random.Range(-5, 5), room.position.y + Random.Range(-5, 5));
-                go.transform.position = room.position;
+                Vector3 pos = new Vector2(room.position.x + Random.Range(-5, 5), room.position.y + Random.Range(-5, 5));
+                go.transform.position = pos;
                 rewardSpawned = true;
             }
         }
     }
 
-    public void OpenPortal()
+    public void OpenPortal(Transform position)
     {
         _portal.gameObject.SetActive(true);
+        _portal.transform.position = position.position;
     }
 }

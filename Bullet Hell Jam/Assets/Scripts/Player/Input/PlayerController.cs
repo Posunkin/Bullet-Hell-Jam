@@ -44,6 +44,10 @@ public class PlayerController : MonoBehaviour
         _dialogueSystem.DialogueEnded += EnableInput;
     }
 
+    private void Start()
+    {
+    }
+
     private void OnEnable()
     {
         _playerInput.Enable();
@@ -53,6 +57,7 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         _playerInput.Disable();
+        _playerInput.Movement.Dash.performed -= _ => Dash();
         StopAllCoroutines();
     }
 
@@ -110,6 +115,7 @@ public class PlayerController : MonoBehaviour
         {
             _isDashing = true;
             _dashOnCD = true;
+            _anim.SetTrigger("Dash");
             _rb.velocity = new Vector2(_movement.x * _dashSpeed, _movement.y * _dashSpeed);
             StartCoroutine(DashRoutine());
         }
