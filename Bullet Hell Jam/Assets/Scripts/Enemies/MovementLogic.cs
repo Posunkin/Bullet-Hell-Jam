@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class MovementLogic : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed;
-    private float _taskDelay = 2;
-    private Enemy _enemy;
-    private Rigidbody2D _rb;
-    private Movement _movement;
-    private bool _hasTask;
-    private bool _isMoving;
-    private Vector2 _direction;
-    private Animator _anim;
-    private WaitForSeconds _taskTime;
+    [SerializeField] protected float _moveSpeed;
+    protected float _taskDelay = 2;
+    protected Enemy _enemy;
+    protected Rigidbody2D _rb;
+    protected Movement _movement;
+    protected bool _hasTask;
+    protected bool _isMoving;
+    protected Vector2 _direction;
+    protected Animator _anim;
+    protected WaitForSeconds _taskTime;
 
-    void Start()
+    protected virtual void Start()
     {
         _taskTime = new WaitForSeconds(_taskDelay);
         _anim = GetComponent<Animator>();
@@ -24,34 +24,36 @@ public class MovementLogic : MonoBehaviour
         _movement = new Movement(_enemy, _rb, _moveSpeed);
     }
 
-    void Update()
+    protected virtual void Update()
     {
-        if (!_hasTask)
-        {
-            if (Random.value > 0.5)
-            {
-                Debug.Log("IDLE");
-                _isMoving = false;
-                _hasTask = true;
-                _anim.SetBool("Walk", _isMoving);                                
-                StartCoroutine(MovementRoutine());
-            }
-            else
-            {
-                _isMoving = true;
-                _hasTask = true;
-                _direction = _movement.GetPatrolPosition();
-                StartCoroutine(MovementRoutine());
-            }
-        }
+        if (!_hasTask) SetTask();
         if (_isMoving)
-        {   
+        {
             _movement.MoveToPosition(_direction);
             _anim.SetBool("Walk", _isMoving);
         }
     }
 
-    private IEnumerator MovementRoutine()
+    protected virtual void SetTask()
+    {
+        if (Random.value > 0.5)
+        {
+            Debug.Log("IDLE");
+            _isMoving = false;
+            _hasTask = true;
+            _anim.SetBool("Walk", _isMoving);
+            StartCoroutine(MovementRoutine());
+        }
+        else
+        {
+            _isMoving = true;
+            _hasTask = true;
+            _direction = _movement.GetPatrolPosition();
+            StartCoroutine(MovementRoutine());
+        }
+    }
+
+    protected IEnumerator MovementRoutine()
     {
         yield return _taskTime;
         _hasTask = false;

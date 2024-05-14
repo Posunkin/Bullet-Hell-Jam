@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class EnemyParticleWeapon : EnemyWeapon
 {
+    public bool CanShoot { get => _canShoot; }
     [Header("Weapon parameters:")]
     [SerializeField] private float _size;
+    [SerializeField] private bool _hasAnimation;
 
     [Header("Different parameters:")]
     [SerializeField] private bool _shapeEnable;
@@ -21,7 +23,7 @@ public class EnemyParticleWeapon : EnemyWeapon
 
     private void Start()
     {
-        _anim = GetComponent<Animator>();
+        if (_hasAnimation) _anim = GetComponent<Animator>();
         _container = gameObject.transform.parent;
         _muzzlePoint.Init(_damage);
         StartCoroutine(PredelayRoutine());
@@ -70,7 +72,7 @@ public class EnemyParticleWeapon : EnemyWeapon
         if (_canShoot)
         {
             _system.Play();
-            _anim.SetTrigger("Shoot");
+            if (_hasAnimation) _anim.SetTrigger("Shoot");
             StartCoroutine(ShootingRoutine());
         }
     }
