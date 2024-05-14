@@ -5,6 +5,7 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private Enemy[] _enemyPrefabs;
     [SerializeField] private Enemy _questEnemyPrefab;
+    [SerializeField] private Enemy _bossEnemyPrefab;
     private IInstantiator _instantiator;
 
     private int _enemyCount;
@@ -38,6 +39,9 @@ public class Spawner : MonoBehaviour
             case RoomType.Challenge:
                 SpawnChallengeEnemies();
                 break;
+            case RoomType.Boss:
+                SpawnBoss();
+                break;
         }
     }
 
@@ -58,6 +62,13 @@ public class Spawner : MonoBehaviour
             go.OnEnemyDeath += EnemyDied;
             _enemyCount++;
         }   
+    }
+
+    private void SpawnBoss()
+    {
+        Enemy go = _instantiator.InstantiatePrefabForComponent<Enemy>(_bossEnemyPrefab);
+        go.transform.position = _spawnPoints[0].transform.position;
+        go.OnEnemyDeath += BossDied;
     }
 
     private void SpawnChallengeEnemies()
@@ -81,6 +92,12 @@ public class Spawner : MonoBehaviour
             _rewardSpawner.SpawnBaseReward(_currentRoom.RoomCenter);
             _currentRoom.OpenTheDoors();
         }
+    }
+
+    private void BossDied(Enemy boss)
+    {
+        boss.OnEnemyDeath -= BossDied;
+        _rewardSpawner.OpenPortal();
     }
 
     private void QuestEnemyDied(Enemy enemy)

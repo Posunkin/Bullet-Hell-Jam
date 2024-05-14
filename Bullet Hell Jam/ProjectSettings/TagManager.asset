@@ -56,6 +56,9 @@ TagManager:
   - name: Weapon
     uniqueID: 2301885533
     locked: 0
+  - name: BigDecorations
+    uniqueID: 223656375
+    locked: 0
   - name: Loot
     uniqueID: 3998931987
     locked: 0

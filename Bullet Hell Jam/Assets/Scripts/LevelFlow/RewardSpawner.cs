@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class RewardSpawner : MonoBehaviour
@@ -5,6 +6,7 @@ public class RewardSpawner : MonoBehaviour
     [SerializeField] private Loot[] _lootPrefabs;
     [SerializeField] private Loot[] _specialLootPrefabs;
     [SerializeField] private Loot _questRewardPrefab;
+    [SerializeField] private Portal _portal;
 
     public void SpawnBaseReward(Transform room)
     {
@@ -34,5 +36,10 @@ public class RewardSpawner : MonoBehaviour
                 rewardSpawned = true;
             }
         }
+    }
+
+    public void OpenPortal()
+    {
+        _portal.gameObject.SetActive(true);
     }
 }

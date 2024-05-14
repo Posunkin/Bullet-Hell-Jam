@@ -14,6 +14,11 @@ public class Movement
         _moveSpeed = moveSpeed;
     }
 
+    public void Stay()
+    {
+        _rb.velocity = Vector2.zero;
+    }
+
     public void MoveToPosition(Vector2 pos)
     {
         _rb.MovePosition(_rb.position + pos * (_moveSpeed * Time.fixedDeltaTime));
