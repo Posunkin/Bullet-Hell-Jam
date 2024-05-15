@@ -275,7 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 10
   _healthBar: {fileID: 3986789059500523871}
-  _cantDie: 1
+  _cantDie: 0
   _playerUI: {fileID: 6978070683478670634}
   _damageMat: {fileID: 2100000, guid: eb67c1dc1313b48e08f4ba79f0520899, type: 2}
   _stats: {fileID: 11400000, guid: b9b403556296540dda93ec455186dbd8, type: 2}

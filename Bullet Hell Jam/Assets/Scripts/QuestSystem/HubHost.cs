@@ -31,6 +31,7 @@ public class HubHost : MonoBehaviour, IQuestable
     {
         _portal.gameObject.SetActive(false);
         _currentChapter = _storyFlowHandler.CurrentChapter;
+        Debug.Log(_currentChapter);
         switch (_currentChapter)
         {
             case 1:

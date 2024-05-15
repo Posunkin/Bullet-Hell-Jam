@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minCount: 0
-  _maxCount: 6
+  _maxCount: 2
 --- !u!61 &489794835529636129
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -166,7 +166,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -296035309
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 842ff8c6e2942453e9e81644ddefb05c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

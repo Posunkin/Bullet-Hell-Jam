@@ -17846,6 +17846,10 @@ PrefabInstance:
       propertyPath: _fade
       value: 
       objectReference: {fileID: 156651929}
+    - target: {fileID: 5900754068729327638, guid: a8bdb14206f5e42b281cdbcd444a995b, type: 3}
+      propertyPath: _sceneToLoad
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7644722001313157149, guid: a8bdb14206f5e42b281cdbcd444a995b, type: 3}
       propertyPath: m_Name
       value: Portal
@@ -19714,8 +19718,8 @@ MonoBehaviour:
   - {fileID: 8307010091025762744, guid: 85627d14004834ac2ac0cd5ca72e8a10, type: 3}
   - {fileID: 8307010091025762744, guid: 85627d14004834ac2ac0cd5ca72e8a10, type: 3}
   - {fileID: 1869102888997371282, guid: 613c9b30ea1324a90a46f75c704d35be, type: 3}
-  _questEnemyPrefab: {fileID: 8307010091025762744, guid: 85627d14004834ac2ac0cd5ca72e8a10, type: 3}
-  _bossEnemyPrefab: {fileID: 6989386369949988514, guid: 08212ffb0eba74202847fab9faa11cc5, type: 3}
+  _questEnemyPrefab: {fileID: 6989386369949988514, guid: 08212ffb0eba74202847fab9faa11cc5, type: 3}
+  _bossEnemyPrefab: {fileID: 0}
 --- !u!4 &1372474233
 Transform:
   m_ObjectHideFlags: 0

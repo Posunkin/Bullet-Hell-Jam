@@ -1,15 +1,15 @@
 -> main
 
 === main ===
-Keeper Vigil: John, I've given it some thought, and I believe I may have a lead for you. There is an artifact held by one of the Keepers in the neighboring world. It's said to have the ability to reveal hidden truths and locations. Perhaps it could aid us in finding your daughter.
+Keeper Vigil: John, I've been thinking about this and I think I may have a lead for you. There is an artefact in the possession of one of the World Keepers on the neighbouring world. It's said to have the ability to reveal hidden truths and places. Perhaps it can help us find your daughter.
 
-John: An artifact? What kind of artifact?
+John: An artefact? What kind of artefact?
 
 Keeper Vigil: It's known as the "Sightstone," a relic of great power and mystery. If we can acquire it, we may uncover clues that could lead us to your daughter's whereabouts.
 
 John: And you think this Keeper will just hand it over to us?
 
-Keeper Vigil: Not exactly, but I believe I can arrange a meeting. I have some influence among the Keepers, and if we approach with the right offer, we may be able to persuade them.
+Keeper Vigil: I don't think so, you'll have to take it by force, you're one of the best at it. Losing the artefact will have an effect on the world, but this is a world of wild lands, devouring everything around it. I don't think anyone will sympathise with its inhabitants.
 
 John: Alright, let's do it. I'll take any chance to find my daughter.
 

@@ -13,16 +13,18 @@ public class QuestCharacter : MonoBehaviour, IQuestable
     [SerializeField] private Loot _arifactPrefab;
     [SerializeField] private Room _room;
     private DialogueSystem _dialogueSystem;
+    private StoryFlowHandler _storyFlowHandler;
 
     private bool _canStartDialogue;
 
     private InputAction _input;
 
     [Inject]
-    private void Construct(DialogueSystem dialogueSystem, PlayerStats player)
+    private void Construct(DialogueSystem dialogueSystem, PlayerStats player, StoryFlowHandler storyFlowHandler)
     {
         _dialogueSystem = dialogueSystem;
         _input = player.GetComponent<PlayerController>().CurrentInput.Dialogue.Speak;
+        _storyFlowHandler = storyFlowHandler;
     }
 
     private void Awake()
@@ -60,11 +62,14 @@ public class QuestCharacter : MonoBehaviour, IQuestable
         {
             Loot key = Instantiate(_arifactPrefab, null);
             key.transform.position = new Vector2(transform.position.x + 3, transform.position.y - 3);
+            _storyFlowHandler.AddGoodDescision();
         }
         else
         {
             _room.EnterQuestRoom();
+            _storyFlowHandler.AddBadDescision();
             Destroy(gameObject);
         }
+        _storyFlowHandler.NextChapter();
     }
 }

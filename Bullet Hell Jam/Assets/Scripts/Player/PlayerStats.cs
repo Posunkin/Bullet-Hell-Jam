@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 public class PlayerStats : MonoBehaviour, IDamageable
@@ -76,6 +77,8 @@ public class PlayerStats : MonoBehaviour, IDamageable
         if (_currentHealth <= 0)
         {
             if (_cantDie) return;
+            var scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.buildIndex);
             Destroy(gameObject);
         }
         else
