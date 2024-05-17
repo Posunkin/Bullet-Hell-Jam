@@ -6,6 +6,7 @@ public class GiantGoblinAI : MovementLogic
 {
     [SerializeField] protected EnemyParticleWeapon _weapon;
     private float _shootDelay = 3;
+    private Boss _boss;
     protected WaitForSeconds _shootWait;
     protected bool _canShoot = true;
     protected bool _attackAnimPlaying = false;
@@ -21,7 +22,8 @@ public class GiantGoblinAI : MovementLogic
     {
         _shootWait = new WaitForSeconds(_shootDelay);
         base.Start();
-        _enemy.OnEnemyDeath += Death;
+        _boss = GetComponent<Boss>();
+        _boss.OnEnemyDeath += Death;
     }
     
     protected override void Update()
@@ -77,7 +79,7 @@ public class GiantGoblinAI : MovementLogic
 
     protected void Death(Enemy enemy)
     {
-        _enemy.OnEnemyDeath -= Death;
+        _boss.OnEnemyDeath -= Death;
         _weapon.StopShooting();
     }
 }

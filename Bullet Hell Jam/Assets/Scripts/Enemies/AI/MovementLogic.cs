@@ -5,7 +5,6 @@ public class MovementLogic : MonoBehaviour
 {
     [SerializeField] protected float _moveSpeed;
     protected float _taskDelay = 2;
-    protected Enemy _enemy;
     protected Rigidbody2D _rb;
     protected Movement _movement;
     protected bool _hasTask;
@@ -19,9 +18,8 @@ public class MovementLogic : MonoBehaviour
         _taskTime = new WaitForSeconds(_taskDelay);
         _anim = GetComponent<Animator>();
         _hasTask = false;
-        _enemy = GetComponent<Enemy>();
         _rb = GetComponent<Rigidbody2D>();
-        _movement = new Movement(_enemy, _rb, _moveSpeed);
+        _movement = new Movement( _rb, _moveSpeed);
     }
 
     protected virtual void Update()

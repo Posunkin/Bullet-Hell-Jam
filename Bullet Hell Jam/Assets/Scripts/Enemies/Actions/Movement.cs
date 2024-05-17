@@ -2,14 +2,12 @@ using UnityEngine;
 
 public class Movement
 {
-    private Enemy _enemy;
     private float _moveSpeed;
     private Rigidbody2D _rb;
     private Vector2 _newPos;
 
-    public Movement(Enemy enemy, Rigidbody2D rb, float moveSpeed)
+    public Movement(Rigidbody2D rb, float moveSpeed)
     {
-        _enemy = enemy;
         _rb = rb;
         _moveSpeed = moveSpeed;
     }
