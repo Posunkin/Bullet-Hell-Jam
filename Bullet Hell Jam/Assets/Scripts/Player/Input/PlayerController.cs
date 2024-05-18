@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _dashDuration;
     [SerializeField] private float _dashCD;
     [SerializeField] private PlayerStatsSO _stats;
+    [SerializeField] private ActiveWeapon _shotgun;
+    [SerializeField] private ActiveWeapon[] _pistols;
     private bool _isDashing = false;
     private bool _dashOnCD = false;
 
@@ -44,20 +46,18 @@ public class PlayerController : MonoBehaviour
         _dialogueSystem.DialogueEnded += EnableInput;
     }
 
-    private void Start()
-    {
-    }
-
     private void OnEnable()
     {
         _playerInput.Enable();
         _playerInput.Movement.Dash.performed += _ => Dash();
+        _playerInput.Combat.ChangeWeapon.performed += _ => ChangeWeapon();
     }
 
     private void OnDisable()
     {
         _playerInput.Disable();
         _playerInput.Movement.Dash.performed -= _ => Dash();
+        _playerInput.Combat.ChangeWeapon.performed -= _ => ChangeWeapon();
         StopAllCoroutines();
     }
 
@@ -141,4 +141,24 @@ public class PlayerController : MonoBehaviour
         _playerInput.Enable();
     }
     #endregion
+
+    private void ChangeWeapon()
+    {
+        if (_shotgun.gameObject.activeInHierarchy)
+        {
+            _shotgun.gameObject.SetActive(false);
+            foreach (var pistol in _pistols)
+            {
+                pistol.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (var pistol in _pistols)
+            {
+                pistol.gameObject.SetActive(false);
+            }
+            _shotgun.gameObject.SetActive(true);
+        }
+    }
 }

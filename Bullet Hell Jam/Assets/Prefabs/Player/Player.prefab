@@ -261,6 +261,10 @@ MonoBehaviour:
   _dashDuration: 0.2
   _dashCD: 0.5
   _stats: {fileID: 11400000, guid: b9b403556296540dda93ec455186dbd8, type: 2}
+  _shotgun: {fileID: 4717217929929189903}
+  _pistols:
+  - {fileID: 1512351407762503354}
+  - {fileID: 5029802708981773524}
 --- !u!114 &5531461421460582493
 MonoBehaviour:
   m_ObjectHideFlags: 0
