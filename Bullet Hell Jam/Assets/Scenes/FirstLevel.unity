@@ -16059,7 +16059,7 @@ MonoBehaviour:
   _bossRoomPrefab: {fileID: 6781112628789912116, guid: aa5650a2163fe400b922ee5687d986b0, type: 3}
   _startingRoom: {fileID: 1742982318}
   _questRoomPrefab: {fileID: 2271000535928190659, guid: 91488324233a741e3a494565368d58dc, type: 3}
-  _levelSize: 7
+  _levelSize: 15
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0

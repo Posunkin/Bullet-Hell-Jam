@@ -90,8 +90,7 @@ public class Shop : MonoBehaviour
         {
             _wallet.TakeMoney(_shopData.HealthPrice);
             _stats.GradeHealth();
-            int price = _shopData.HealthPrice * 2;
-            _shopData.HealthPrice = price;
+            _shopData.HealthPrice = _shopData.HealthPrice * 2;
             _healthPriceUI.text = _shopData.HealthPrice.ToString();
             _shopData.HealthGradeCount = _shopData.HealthGradeCount + 1;
         }
@@ -108,9 +107,9 @@ public class Shop : MonoBehaviour
         {
             _wallet.TakeMoney(_shopData.PistolPrice);
             _stats.GradePistolDamage();
-            _shopData.PistolPrice *= 2;
+            _shopData.PistolPrice = _shopData.PistolPrice * 2;
             _pistolPriceUI.text = _shopData.PistolPrice.ToString();
-            _shopData.PistolGradeCount++;
+            _shopData.PistolGradeCount = _shopData.PistolGradeCount + 1;
         }
         if (_shopData.PistolGradeCount == 6)
         {
@@ -125,9 +124,9 @@ public class Shop : MonoBehaviour
         {
             _wallet.TakeMoney(_shopData.PistolPrice);
             _stats.GradePistolDelay();
-            _shopData.PistolPrice *= 2;
+            _shopData.PistolPrice = _shopData.PistolPrice * 2;
             _pistolPriceUI.text = _shopData.PistolPrice.ToString();
-            _shopData.PistolGradeCount++;
+            _shopData.PistolGradeCount = _shopData.PistolGradeCount + 1;
         }
         if (_shopData.PistolGradeCount == 6)
         {
@@ -142,9 +141,9 @@ public class Shop : MonoBehaviour
         {
             _wallet.TakeMoney(_shopData.ShotgunPrice);
             _stats.GradeShotgunDamage();
-            _shopData.ShotgunPrice *= 2;
+            _shopData.ShotgunPrice = _shopData.ShotgunPrice * 2;
             _shotgunPriceUI.text = _shopData.ShotgunPrice.ToString();
-            _shopData.ShotgunGradeCount++;
+            _shopData.ShotgunGradeCount = _shopData.ShotgunGradeCount + 1;
         }
         if (_shopData.ShotgunGradeCount == 6)
         {
@@ -159,9 +158,9 @@ public class Shop : MonoBehaviour
         {
             _wallet.TakeMoney(_shopData.ShotgunPrice);
             _stats.GradeShotgunDelay();
-            _shopData.ShotgunPrice *= 2;
+            _shopData.ShotgunPrice = _shopData.ShotgunPrice * 2;
             _shotgunPriceUI.text = _shopData.ShotgunPrice.ToString();
-            _shopData.ShotgunGradeCount++;
+            _shopData.ShotgunGradeCount = _shopData.ShotgunGradeCount + 1;
         }
         if (_shopData.ShotgunGradeCount == 6)
         {
