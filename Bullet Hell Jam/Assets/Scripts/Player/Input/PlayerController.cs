@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class PlayerController : MonoBehaviour
@@ -21,6 +22,9 @@ public class PlayerController : MonoBehaviour
     private WaitForSeconds _dashCDSeconds;
 
     private PlayerInput _playerInput;
+    private InputAction _dashAction;
+    private InputAction _changeWeaponAction;
+
     private Vector2 _movement;
     private Rigidbody2D _rb;
     private Animator _anim;
@@ -54,13 +58,19 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _playerInput.Movement.Dash.performed += _ => Dash();
-        _playerInput.Combat.ChangeWeapon.performed += _ => ChangeWeapon();
+        _dashAction = _playerInput.Movement.Dash;
+        _dashAction.performed += Dash;
+        _changeWeaponAction = _playerInput.Combat.ChangeWeapon;
+        _changeWeaponAction.performed += ChangeWeapon;
+        _dashAction.Enable();
+        _changeWeaponAction.Enable();
     }
 
     private void OnDisable()
     {
         _playerInput.Disable();
+        _dashAction.Disable();
+        _changeWeaponAction.Disable();
         StopAllCoroutines();
     }
 
@@ -112,7 +122,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Dash
-    private void Dash()
+    private void Dash(InputAction.CallbackContext context)
     {
         if (!_dashOnCD)
         {
@@ -145,7 +155,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    private void ChangeWeapon()
+    private void ChangeWeapon(InputAction.CallbackContext context)
     {
         if (_shotgun.gameObject.activeInHierarchy)
         {
@@ -163,5 +173,14 @@ public class PlayerController : MonoBehaviour
             }
             _shotgun.gameObject.SetActive(true);
         }
+    }
+
+    private void OnDestroy()
+    {
+        _playerInput.Disable();
+        _dashAction.performed -= Dash;
+        _dashAction.Disable();
+        _changeWeaponAction.performed -= ChangeWeapon;
+        _changeWeaponAction.Disable();
     }
 }

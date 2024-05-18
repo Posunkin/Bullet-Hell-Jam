@@ -59,7 +59,6 @@ public class Room : MonoBehaviour
         Debug.Log("Entering boss room");
         SetCamera();
         if (_roomVisited || _startedRoom) return;
-        CloseTheDoors();
         _roomVisited = true;
         _spawner.SpawnEnemies(this, _spawnPoints);
     }
