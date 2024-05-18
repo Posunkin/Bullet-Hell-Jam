@@ -19718,7 +19718,7 @@ MonoBehaviour:
   - {fileID: 8307010091025762744, guid: 85627d14004834ac2ac0cd5ca72e8a10, type: 3}
   - {fileID: 8307010091025762744, guid: 85627d14004834ac2ac0cd5ca72e8a10, type: 3}
   - {fileID: 1869102888997371282, guid: 613c9b30ea1324a90a46f75c704d35be, type: 3}
-  _questEnemyPrefab: {fileID: 6989386369949988514, guid: 08212ffb0eba74202847fab9faa11cc5, type: 3}
+  _questEnemyPrefab: {fileID: 4840152161708028148, guid: 08212ffb0eba74202847fab9faa11cc5, type: 3}
   _bossEnemyPrefab: {fileID: 0}
 --- !u!4 &1372474233
 Transform:

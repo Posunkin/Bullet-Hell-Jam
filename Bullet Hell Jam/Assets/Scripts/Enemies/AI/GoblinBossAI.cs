@@ -4,6 +4,14 @@ public class GoblinBossAI : GiantGoblinAI
 {
     [SerializeField] private EnemyProjectileWeapon _gun;
     private float _shootDelay = 2;
+    private Boss _boss;
+
+    protected override void Start()
+    {
+        base.Start();
+        _boss = GetComponent<Boss>();
+        _boss.OnEnemyDeath += Death;
+    }
 
     protected override void Update()
     {
@@ -31,5 +39,11 @@ public class GoblinBossAI : GiantGoblinAI
                 StartCoroutine(AttackRoutine());
             }
         }
+    }
+
+    protected override void Death(Enemy enemy)
+    {
+        _boss.OnEnemyDeath -= Death;
+        _weapon.StopShooting();
     }
 }
