@@ -13,17 +13,17 @@ public class Shop : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _healthPriceUI;
     [SerializeField] private TextMeshProUGUI _pistolPriceUI;
     [SerializeField] private TextMeshProUGUI _shotgunPriceUI;
+    [SerializeField] private ShopDataSO _shopData;
+
+    [SerializeField] private GameObject _healthActiveWindow;
+    [SerializeField] private GameObject _pistolActiveWindow;
+    [SerializeField] private GameObject _shotgunActiveWindow;
+    [SerializeField] private GameObject _healthDeactiveWindow;
+    [SerializeField] private GameObject _pistolDeactiveWindow;
+    [SerializeField] private GameObject _shotgunDeactiveWindow;
     private InputAction _input;
     private Wallet _wallet;
     private DialogueSystem _dialogueSystem;
-    private int _healthPrice = 1;
-    private int _pistolPrice = 1;
-    private int _shotgunPrice = 1;
-    private int _healthGradedCount = 0;
-    private int _pistolDamageGradedCount = 0;
-    private int _pistolDelayGradedCount = 0;
-    private int _shotgunDamageGradedCount = 0;
-    private int _shotgunDelayGradedCount = 0;
 
     [Inject]
     private void Construct(Wallet wallet, PlayerStats player, DialogueSystem dialogueSystem)
@@ -37,9 +37,30 @@ public class Shop : MonoBehaviour
     {
         _marker.enabled = false;
         _shopMenu.gameObject.SetActive(false);
-        _healthPriceUI.text = _healthPrice.ToString();
-        _pistolPriceUI.text = _pistolPrice.ToString();
-        _shotgunPriceUI.text = _shotgunPrice.ToString();
+        
+        _healthPriceUI.text = _shopData.HealthPrice.ToString();
+        _pistolPriceUI.text = _shopData.PistolPrice.ToString();
+        _shotgunPriceUI.text = _shopData.ShotgunPrice.ToString();
+        ActiveWindows();
+    }
+
+    private void ActiveWindows()
+    {
+        if (_shopData.HealthGradeCount == 4)
+        {
+            _healthActiveWindow.SetActive(false);
+            _healthDeactiveWindow.SetActive(true);
+        }
+        if (_shopData.PistolGradeCount == 6)
+        {
+            _pistolActiveWindow.SetActive(false);
+            _pistolDeactiveWindow.SetActive(true);
+        }
+        if (_shopData.ShotgunGradeCount == 6)
+        {
+            _shotgunActiveWindow.SetActive(false);
+            _shotgunDeactiveWindow.SetActive(true);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -65,63 +86,87 @@ public class Shop : MonoBehaviour
 
     public void GradeHealth()
     {
-        if (_wallet.HaveEnoughMoney(_healthPrice) && _healthGradedCount < 5)
+        if (_wallet.HaveEnoughMoney(_shopData.HealthPrice) && _shopData.HealthGradeCount < 5)
         {
-            _wallet.TakeMoney(_healthPrice);
+            _wallet.TakeMoney(_shopData.HealthPrice);
             _stats.GradeHealth();
-            _healthPrice *= 2;
-            _healthPriceUI.text = _healthPrice.ToString();
-            _healthGradedCount++;
+            int price = _shopData.HealthPrice * 2;
+            _shopData.HealthPrice = price;
+            _healthPriceUI.text = _shopData.HealthPrice.ToString();
+            _shopData.HealthGradeCount = _shopData.HealthGradeCount + 1;
+        }
+        if (_shopData.HealthGradeCount == 4)
+        {
+            _healthActiveWindow.SetActive(false);
+            _healthDeactiveWindow.SetActive(true);
         }
     }
 
     public void GradePistolDamage()
     {
-        if (_wallet.HaveEnoughMoney(_pistolPrice) && _pistolDamageGradedCount < 5)
+        if (_wallet.HaveEnoughMoney(_shopData.PistolPrice) && _shopData.PistolGradeCount < 7)
         {
-            _wallet.TakeMoney(_pistolPrice);
+            _wallet.TakeMoney(_shopData.PistolPrice);
             _stats.GradePistolDamage();
-            _pistolPrice *= 2;
-            _pistolPriceUI.text = _pistolPrice.ToString();
-            _pistolDamageGradedCount++;
+            _shopData.PistolPrice *= 2;
+            _pistolPriceUI.text = _shopData.PistolPrice.ToString();
+            _shopData.PistolGradeCount++;
+        }
+        if (_shopData.PistolGradeCount == 6)
+        {
+            _pistolActiveWindow.SetActive(false);
+            _pistolDeactiveWindow.SetActive(true);
         }
     }
 
     public void GradePistolDelay()
     {
-        if (_wallet.HaveEnoughMoney(_pistolPrice) && _pistolDelayGradedCount < 5)
+        if (_wallet.HaveEnoughMoney(_shopData.PistolPrice) && _shopData.PistolGradeCount < 7)
         {
-            _wallet.TakeMoney(_pistolPrice);
+            _wallet.TakeMoney(_shopData.PistolPrice);
             _stats.GradePistolDelay();
-            _pistolPrice *= 2;
-            _pistolPriceUI.text = _pistolPrice.ToString();
-            _pistolDelayGradedCount++;
+            _shopData.PistolPrice *= 2;
+            _pistolPriceUI.text = _shopData.PistolPrice.ToString();
+            _shopData.PistolGradeCount++;
+        }
+        if (_shopData.PistolGradeCount == 6)
+        {
+            _pistolActiveWindow.SetActive(false);
+            _pistolDeactiveWindow.SetActive(true);
         }
     }
 
     public void GradeShotgunDamage()
     {
-        if (_wallet.HaveEnoughMoney(_shotgunPrice) && _shotgunDamageGradedCount < 5)
+        if (_wallet.HaveEnoughMoney(_shopData.ShotgunPrice) && _shopData.ShotgunGradeCount < 7)
         {
-            _wallet.TakeMoney(_shotgunPrice);
+            _wallet.TakeMoney(_shopData.ShotgunPrice);
             _stats.GradeShotgunDamage();
-            _shotgunPrice *= 2;
-            _shotgunPriceUI.text = _shotgunPrice.ToString();
-            _shotgunDamageGradedCount++;
+            _shopData.ShotgunPrice *= 2;
+            _shotgunPriceUI.text = _shopData.ShotgunPrice.ToString();
+            _shopData.ShotgunGradeCount++;
+        }
+        if (_shopData.ShotgunGradeCount == 6)
+        {
+            _shotgunActiveWindow.SetActive(false);
+            _shotgunDeactiveWindow.SetActive(true);
         }
     }
 
     public void GradeShotgunDelay()
     {
-        if (_wallet.HaveEnoughMoney(_shotgunPrice) && _shotgunDelayGradedCount < 5)
+        if (_wallet.HaveEnoughMoney(_shopData.ShotgunPrice) && _shopData.ShotgunGradeCount < 7)
         {
-            _wallet.TakeMoney(_shotgunPrice);
+            _wallet.TakeMoney(_shopData.ShotgunPrice);
             _stats.GradeShotgunDelay();
-            _shotgunPrice *= 2;
-            _shotgunPriceUI.text = _shotgunPrice.ToString();
-            _shotgunDelayGradedCount++;
+            _shopData.ShotgunPrice *= 2;
+            _shotgunPriceUI.text = _shopData.ShotgunPrice.ToString();
+            _shopData.ShotgunGradeCount++;
+        }
+        if (_shopData.ShotgunGradeCount == 6)
+        {
+            _shotgunActiveWindow.SetActive(false);
+            _shotgunDeactiveWindow.SetActive(true);
         }
     }
-
-
 }

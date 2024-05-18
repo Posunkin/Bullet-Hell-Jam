@@ -67,7 +67,6 @@ public class DialogueSystem : MonoBehaviour
 
         for (int i = 0; i < currentChoices.Count; i++)
         {
-            Debug.Log(currentChoices[i].text);
             _choicesText[i].text = currentChoices[i].text;
             _choicesButtons[i].SetActive(true);
         }
@@ -91,6 +90,7 @@ public class DialogueSystem : MonoBehaviour
         _currentCharacter.DialogueEnded(_lastChoiceIndex);
         _dialoguePanel.gameObject.SetActive(false);
         _dialogueText.text = "";
+        _lastChoiceIndex = -1;
     }
 
     public void BlockInput()

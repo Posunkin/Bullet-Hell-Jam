@@ -92,7 +92,6 @@ public class Room : MonoBehaviour
 
     private void CloseTheDoors()
     {
-        Debug.Log("ClosingDoors");
         _doorD.gameObject.SetActive(true);
         _doorU.gameObject.SetActive(true);
         _doorR.gameObject.SetActive(true);

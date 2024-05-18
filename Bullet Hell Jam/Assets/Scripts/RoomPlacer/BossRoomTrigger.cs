@@ -8,7 +8,6 @@ public class BossRoomTrigger : RoomTrigger
     {
         if (other.TryGetComponent<PlayerStats>(out PlayerStats player))
         {
-            Debug.Log(player.HaveKey);
             _player = player;
             if (player.HaveKey)
             {

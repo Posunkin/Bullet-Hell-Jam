@@ -36,7 +36,6 @@ public class MovementLogic : MonoBehaviour
     {
         if (Random.value > 0.5)
         {
-            Debug.Log("IDLE");
             _isMoving = false;
             _hasTask = true;
             _anim.SetBool("Walk", _isMoving);

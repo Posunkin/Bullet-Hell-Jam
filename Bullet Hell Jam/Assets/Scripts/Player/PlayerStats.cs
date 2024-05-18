@@ -50,7 +50,6 @@ public class PlayerStats : MonoBehaviour, IDamageable
                     if (_currentHealth != _maxHealth)
                     {
                         HealthUp healthUp = (HealthUp)loot;
-                        Debug.Log(healthUp.HealPercent);
                         _currentHealth += _maxHealth * (healthUp.HealPercent / 100);
                         _healthBar.ChangeHealth(_currentHealth);
                         Destroy(other.gameObject);
