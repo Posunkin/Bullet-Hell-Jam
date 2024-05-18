@@ -92,4 +92,14 @@ public class DialogueSystem : MonoBehaviour
         _dialoguePanel.gameObject.SetActive(false);
         _dialogueText.text = "";
     }
+
+    public void BlockInput()
+    {
+        DialogueStarted?.Invoke();
+    }
+
+    public void UnblockInput()
+    {
+        DialogueEnded?.Invoke();
+    }
 }

@@ -49,6 +49,11 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         _playerInput.Enable();
+        
+    }
+
+    private void Start()
+    {
         _playerInput.Movement.Dash.performed += _ => Dash();
         _playerInput.Combat.ChangeWeapon.performed += _ => ChangeWeapon();
     }
@@ -56,8 +61,6 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         _playerInput.Disable();
-        _playerInput.Movement.Dash.performed -= _ => Dash();
-        _playerInput.Combat.ChangeWeapon.performed -= _ => ChangeWeapon();
         StopAllCoroutines();
     }
 
