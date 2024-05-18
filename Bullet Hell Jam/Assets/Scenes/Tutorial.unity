@@ -17857,17 +17857,9 @@ PrefabInstance:
       propertyPath: _fade
       value: 
       objectReference: {fileID: 156651929}
-    - target: {fileID: 5900754068729327638, guid: a8bdb14206f5e42b281cdbcd444a995b, type: 3}
-      propertyPath: _sceneToLoad
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7644722001313157149, guid: a8bdb14206f5e42b281cdbcd444a995b, type: 3}
       propertyPath: m_Name
       value: Portal
-      objectReference: {fileID: 0}
-    - target: {fileID: 7644722001313157149, guid: a8bdb14206f5e42b281cdbcd444a995b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

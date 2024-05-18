@@ -10,11 +10,8 @@ public class RewardSpawner : MonoBehaviour
 
     public void SpawnBaseReward(Transform room)
     {
-        if (Random.value > 0.5f)
-        {
-            Loot go = Instantiate(_lootPrefabs[Random.Range(0, _lootPrefabs.Length)]);
-            go.transform.position = room.position;
-        }
+        Loot go = Instantiate(_lootPrefabs[Random.Range(0, _lootPrefabs.Length)]);
+        go.transform.position = room.position;
     }
 
     public void SpawnQuestReward(Transform room)

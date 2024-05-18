@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class BossRoomTrigger : RoomTrigger
@@ -9,9 +8,11 @@ public class BossRoomTrigger : RoomTrigger
     {
         if (other.TryGetComponent<PlayerStats>(out PlayerStats player))
         {
+            Debug.Log(player.HaveKey);
             _player = player;
-            if (_player.HaveKey)
+            if (player.HaveKey)
             {
+                _room.OpenTheDoors();
                 _room.EnterBossRoom();
             }
         }

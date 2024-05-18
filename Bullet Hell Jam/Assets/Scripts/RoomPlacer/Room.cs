@@ -37,6 +37,7 @@ public class Room : MonoBehaviour
     private void Start()
     {
         if (Type == RoomType.Quest) _roomVisited = true;
+        if (Type == RoomType.Boss) CloseTheDoors();
     }
 
     [Inject]
@@ -56,11 +57,10 @@ public class Room : MonoBehaviour
 
     public void EnterBossRoom()
     {
-        Debug.Log("Entering boss room");
         SetCamera();
         if (_roomVisited || _startedRoom) return;
         _roomVisited = true;
-        _spawner.SpawnEnemies(this, _spawnPoints);
+        _spawner.OpenPortal(this);
     }
 
     public void EnterQuestRoom()
@@ -78,16 +78,16 @@ public class Room : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_type != RoomType.Boss) return;
-        if (other.gameObject.TryGetComponent<PlayerStats>(out PlayerStats player))
-        {
-            Debug.Log(player);
-            if (player.HaveKey)
-            {
-                Debug.Log("Player have key");
-                OpenTheDoorsWithKey();
-            }            
-        }
+        // if (_type != RoomType.Boss) return;
+        // if (other.gameObject.TryGetComponent<PlayerStats>(out PlayerStats player))
+        // {
+        //     Debug.Log(player);
+        //     if (player.HaveKey)
+        //     {
+        //         Debug.Log("Player have key");
+        //         OpenTheDoorsWithKey();
+        //     }            
+        // }
     }
 
     private void CloseTheDoors()

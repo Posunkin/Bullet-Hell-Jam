@@ -130,4 +130,9 @@ public class Spawner : MonoBehaviour
             }
         }
     }
+
+    public void OpenPortal(Room room)
+    {
+        _rewardSpawner.OpenPortal(room.RoomCenter);
+    }
 }
