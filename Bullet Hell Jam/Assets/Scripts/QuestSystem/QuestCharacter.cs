@@ -12,6 +12,7 @@ public class QuestCharacter : MonoBehaviour, IQuestable
     [SerializeField] private int _badChoice;
     [SerializeField] private Loot _arifactPrefab;
     [SerializeField] private Room _room;
+    [SerializeField] private bool _isDescisionable;
     private DialogueSystem _dialogueSystem;
     private StoryFlowHandler _storyFlowHandler;
 
@@ -62,12 +63,20 @@ public class QuestCharacter : MonoBehaviour, IQuestable
         {
             Loot key = Instantiate(_arifactPrefab, null);
             key.transform.position = new Vector2(transform.position.x + 3, transform.position.y - 3);
-            _storyFlowHandler.AddGoodDescision();
+            if (_isDescisionable)
+            {
+                _storyFlowHandler.AddGoodDescision();
+                _storyFlowHandler.LastDescisionWasGood = true;
+            } 
         }
         else
         {
             _room.EnterQuestRoom();
-            _storyFlowHandler.AddBadDescision();
+            if (_isDescisionable) 
+            {
+                _storyFlowHandler.AddBadDescision();
+                 _storyFlowHandler.LastDescisionWasGood = false;
+            }
             Destroy(gameObject);
         }
         _storyFlowHandler.NextChapter();

@@ -24,10 +24,10 @@ Keeper Vigil: I'm a keeper, it's my duty Now, let's focus on finding your daught
         -> No_chosen
         
 === Yes_chosen ===
-Keeper Vigil: Good luck and be careful
+Keeper Vigil: Good luck and be careful.
 -> END
 
 === No_chosen ===
-Keeper Vigil: Get as much time as you need
+Keeper Vigil: Get as much time as you need.
 
 -> END

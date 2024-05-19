@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class StoryFlowHandler : MonoBehaviour
 {
+    public bool LastDescisionWasGood;
     public int BadDescisions { get => _badDescisions; }
     public int GoodDescisions { get => _goodDescisions; }
 
@@ -29,6 +30,7 @@ public class StoryFlowHandler : MonoBehaviour
     public void AddGoodDescision()
     {
         _goodDescisions++;
+        Debug.Log(GoodDescisions);
     }
 
     public void AddBadDescision()

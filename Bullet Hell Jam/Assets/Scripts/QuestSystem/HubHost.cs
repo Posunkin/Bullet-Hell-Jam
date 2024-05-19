@@ -8,6 +8,8 @@ public class HubHost : MonoBehaviour, IQuestable
 
     [Header("Dialogue")]
     [SerializeField] private TextAsset[] _dialoguesChapter1;
+    [SerializeField] private TextAsset[] _goodDialoguesChapter2;
+    [SerializeField] private TextAsset[] _badDialoguesChapter2;
     [SerializeField] private Portal _portal;
 
     private bool _dialogueEnded;
@@ -31,11 +33,22 @@ public class HubHost : MonoBehaviour, IQuestable
     {
         _portal.gameObject.SetActive(false);
         _currentChapter = _storyFlowHandler.CurrentChapter;
+        _portal.InitPortal(_currentChapter + 1);
         Debug.Log(_currentChapter);
         switch (_currentChapter)
         {
             case 1:
                 _currentDialogue = _dialoguesChapter1;
+                break;
+            case 2:
+                if (_storyFlowHandler.LastDescisionWasGood)
+                {
+                    _currentDialogue = _goodDialoguesChapter2;
+                }
+                else
+                {
+                    _currentDialogue = _badDialoguesChapter2;
+                }
                 break;
         }
         _dialogueIndex = 0;

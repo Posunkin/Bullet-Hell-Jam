@@ -39,7 +39,7 @@ public class PlayerStatsSO : ScriptableObject
 
     public void GradeShotgunDamage()
     {
-        _shotgunDamage += 0.4f;
+        _shotgunDamage += 0.2f;
     }
 
     public void GradeShotgunDelay()

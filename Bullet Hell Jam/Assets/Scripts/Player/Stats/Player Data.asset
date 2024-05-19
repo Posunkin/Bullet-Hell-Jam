@@ -15,6 +15,6 @@ MonoBehaviour:
   _maxHealth: 10
   _dashCD: 0.5
   _pistolDamage: 0.3
-  _pistolDelay: 0.3
-  _shotgunDamage: 0.8
-  _shotgunDelay: 0.6
+  _pistolDelay: 0.4
+  _shotgunDamage: 0.5
+  _shotgunDelay: 0.7

@@ -6,6 +6,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Enemy[] _enemyPrefabs;
     [SerializeField] private Enemy _questEnemyPrefab;
     [SerializeField] private Enemy _bossEnemyPrefab;
+    [SerializeField] private bool _needToChangeMusic;
     private IInstantiator _instantiator;
 
     private int _enemyCount;
@@ -48,6 +49,7 @@ public class Spawner : MonoBehaviour
     public void SpawnQuestEnemy(Room room, SpawnPoint[] point)
     {
         _currentRoom = room;
+        if (_needToChangeMusic) MusicHandler.Instance.PlayBossMusic();
         Enemy go = _instantiator.InstantiatePrefabForComponent<Enemy>(_questEnemyPrefab);
         go.transform.position = point[0].transform.position;
         go.OnEnemyDeath += QuestEnemyDied;
@@ -108,6 +110,7 @@ public class Spawner : MonoBehaviour
     private void QuestEnemyDied(Enemy enemy)
     {
         enemy.OnEnemyDeath -= QuestEnemyDied;
+        if (_needToChangeMusic) MusicHandler.Instance.PlayBackMusic();
         _rewardSpawner.SpawnQuestReward(_currentRoom.RoomCenter);
         _currentRoom.OpenTheDoors();
     }

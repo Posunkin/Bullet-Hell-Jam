@@ -19,6 +19,11 @@ public class Portal : MonoBehaviour
         }        
     }
 
+    public void InitPortal(int scene)
+    {
+        _sceneToLoad = scene;
+    }    
+
     private IEnumerator LoadSceneRoutine()
     {
         yield return new WaitForSeconds(_waitTime);
