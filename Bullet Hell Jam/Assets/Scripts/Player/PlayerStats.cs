@@ -13,6 +13,8 @@ public class PlayerStats : MonoBehaviour, IDamageable
     [SerializeField] private PlayerUI _playerUI;
     [SerializeField] private Material _damageMat;
     [SerializeField] private PlayerStatsSO _stats;
+    private StoryFlowHandler _storyFlowHandler;
+    private bool _shadowDash;
     private SpriteRenderer _sprite;
     private Material _originalMat;
     private float _currentHealth;
@@ -24,10 +26,13 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     private void Start()
     {
+        if (_stats.DashSceneRecieve < _storyFlowHandler.CurrentScene) _shadowDash = _stats.ShadowDash;
+        _wallet.RefreshMoney();
         HaveKey = false;
         _playerController = GetComponent<PlayerController>();
         _sprite = GetComponent<SpriteRenderer>();
-        _maxHealth = _stats.MaxHealth;
+        if (_stats.HealthSceneRecieve < _storyFlowHandler.CurrentScene) _maxHealth = _stats.MaxHealth + _stats.ExtraHealth;
+        else _maxHealth = _stats.MaxHealth;
         _currentHealth = _maxHealth;
         _healthBar.SetHealth(_maxHealth);
         _cantTakeDamageWait = new WaitForSeconds(_cantTakeDamageTime);
@@ -35,9 +40,10 @@ public class PlayerStats : MonoBehaviour, IDamageable
     }
 
     [Inject]
-    private void Construct(Wallet wallet)
+    private void Construct(Wallet wallet, StoryFlowHandler storyFlowHandler)
     {
         _wallet = wallet;
+        _storyFlowHandler = storyFlowHandler;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -73,11 +79,14 @@ public class PlayerStats : MonoBehaviour, IDamageable
     public void TakeDamage(float damage)
     {
         if (_cantTakeDamage) return;
+        if (_playerController.IsDashing && _shadowDash) return;
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {
             if (_cantDie) return;
             var scene = SceneManager.GetActiveScene();
+            if (_stats.ShadowDash && _stats.DashSceneRecieve == _storyFlowHandler.CurrentScene) _stats.ShadowDash = false;
+            if (_stats.HealthRecieve && _stats.HealthSceneRecieve == _storyFlowHandler.CurrentScene) _stats.HealthRecieve = false;
             SceneManager.LoadScene(scene.buildIndex);
             Destroy(gameObject);
         }
@@ -95,5 +104,17 @@ public class PlayerStats : MonoBehaviour, IDamageable
         yield return _cantTakeDamageWait;
         _cantTakeDamage = false;
         _sprite.material = _originalMat;
+    }
+
+    public void FirstReward()
+    {
+        _stats.ShadowDash = true;
+        _playerUI.DashMessage();
+    }
+
+    public void SecondReward()
+    {
+        _stats.HealthReward();
+        _playerUI.HealthMessage();
     }
 }

@@ -10,7 +10,12 @@ public class HubHost : MonoBehaviour, IQuestable
     [SerializeField] private TextAsset[] _dialoguesChapter1;
     [SerializeField] private TextAsset[] _goodDialoguesChapter2;
     [SerializeField] private TextAsset[] _badDialoguesChapter2;
+    [SerializeField] private TextAsset[] _twoBadsDialogues;
+    [SerializeField] private TextAsset[] _oneBadDialogues;
+    [SerializeField] private TextAsset[] _goodDialogue;
     [SerializeField] private Portal _portal;
+
+    [SerializeField] private PlayerStatsSO _stats;
 
     private bool _dialogueEnded;
     private int _currentChapter;
@@ -32,15 +37,15 @@ public class HubHost : MonoBehaviour, IQuestable
     private void Awake()
     {
         _portal.gameObject.SetActive(false);
-        _currentChapter = _storyFlowHandler.CurrentChapter;
-        _portal.InitPortal(_currentChapter + 1);
+        _currentChapter = _storyFlowHandler.CurrentScene;
         Debug.Log(_currentChapter);
         switch (_currentChapter)
         {
             case 1:
                 _currentDialogue = _dialoguesChapter1;
+                _portal.InitPortal(2);
                 break;
-            case 2:
+            case 3:
                 if (_storyFlowHandler.LastDescisionWasGood)
                 {
                     _currentDialogue = _goodDialoguesChapter2;
@@ -49,6 +54,22 @@ public class HubHost : MonoBehaviour, IQuestable
                 {
                     _currentDialogue = _badDialoguesChapter2;
                 }
+                _portal.InitPortal(3);
+                break;
+            case 5:
+                if (_stats.ShadowDash && _stats.HealthRecieve)
+                {
+                    _currentDialogue = _twoBadsDialogues;
+                }
+                else if (_stats.ShadowDash || _stats.HealthRecieve)
+                {
+                    _currentDialogue = _oneBadDialogues;
+                }
+                else
+                {
+                    _currentDialogue = _goodDialogue;
+                }
+                _portal.InitPortal(4);
                 break;
         }
         _dialogueIndex = 0;

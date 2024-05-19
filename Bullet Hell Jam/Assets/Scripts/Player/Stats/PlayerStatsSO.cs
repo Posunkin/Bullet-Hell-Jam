@@ -9,6 +9,11 @@ public class PlayerStatsSO : ScriptableObject
     public float PistolDelay { get => _pistolDelay; }
     public float ShotgunDamage { get => _shotgunDamage; }
     public float ShotgunDelay { get => _shotgunDelay; }
+    public bool ShadowDash;
+    public bool HealthRecieve;
+    public int DashSceneRecieve = 2;
+    public int HealthSceneRecieve = 4;
+    public int ExtraHealth = 10;
 
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _dashCD;
@@ -22,6 +27,11 @@ public class PlayerStatsSO : ScriptableObject
         _maxHealth += 2;
     }
 
+    public void HealthReward()
+    {
+        HealthRecieve = true;
+    }
+
     public void GradeDashCD()
     {
         _dashCD -= 0.1f;
@@ -29,7 +39,7 @@ public class PlayerStatsSO : ScriptableObject
 
     public void GradePistolDamage()
     {
-        _pistolDamage += 0.2f;
+        _pistolDamage += 0.1f;
     }
 
     public void GradePistolDelay()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ActiveWeapon : MonoBehaviour
 {
@@ -6,21 +7,48 @@ public class ActiveWeapon : MonoBehaviour
     private PlayerController _playerController;
     private PlayerInput _input;
     private bool _shooting = false;
+    private InputAction _startShoot;
 
     private void Awake()
     {
         _playerController = GetComponentInParent<PlayerController>();
     }
 
+    private void OnEnable()
+    {
+        _shooting = false;
+        if (_startShoot != null) 
+        {
+            _startShoot.Enable();
+            _startShoot.Reset();
+        }
+    }
+
+    private void OnDisable()
+    {
+        _startShoot.Disable();
+    }
+
     private void Start()
     {
         _input = _playerController.CurrentInput;
-        _input.Combat.Shoot.started += _ => _shooting = true;
-        _input.Combat.Shoot.canceled += _ => _shooting = false;
+        _startShoot = _input.Combat.Shoot;
+        _startShoot.started += Shoot;
+        _startShoot.canceled += StopShoot;
     }
 
     private void Update()
     {
         if (_shooting) _currentWeapon.Shoot();
+    }
+
+    private void Shoot(InputAction.CallbackContext context)
+    {
+        _shooting = true;
+    }
+
+    private void StopShoot(InputAction.CallbackContext context)
+    {
+        _shooting = false;
     }
 }

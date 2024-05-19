@@ -24,7 +24,7 @@ public class RoomPlacer : MonoBehaviour
         _instantiator = instantiator;
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
         _spawnedRooms = new Room[_levelSize, _levelSize];
         _mid = _levelSize / 2;
@@ -50,7 +50,6 @@ public class RoomPlacer : MonoBehaviour
                 continue;
             }
             PlaceNewRoom();
-            yield return new WaitForSeconds(0.5f);
         }
 
         for (int x = 0; x < _spawnedRooms.GetLength(0); x++)

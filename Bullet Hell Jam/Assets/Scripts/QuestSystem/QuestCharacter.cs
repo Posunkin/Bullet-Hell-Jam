@@ -79,6 +79,5 @@ public class QuestCharacter : MonoBehaviour, IQuestable
             }
             Destroy(gameObject);
         }
-        _storyFlowHandler.NextChapter();
     }
 }

@@ -8,6 +8,7 @@ public class StoryFlowHandler : MonoBehaviour
 
     public bool TutorialEnded { get; private set; }
     public int CurrentChapter { get => _currentChapter; }
+    public int CurrentScene = 0;
     private int _currentChapter;
     private int _badDescisions;
     private int _goodDescisions;
@@ -15,11 +16,17 @@ public class StoryFlowHandler : MonoBehaviour
     private void Awake()
     {
         _currentChapter = 0;
+        CurrentScene = 0;
     }
 
     public void NextChapter()
     {
         _currentChapter++;
+    }
+
+    public void NextScene()
+    {
+        CurrentScene++;
     }
 
     public void EndTutorial()

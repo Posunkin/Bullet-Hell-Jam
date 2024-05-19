@@ -7,6 +7,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Enemy _questEnemyPrefab;
     [SerializeField] private Enemy _bossEnemyPrefab;
     [SerializeField] private bool _needToChangeMusic;
+    [SerializeField] private int _reward;
     private IInstantiator _instantiator;
 
     private int _enemyCount;
@@ -14,6 +15,7 @@ public class Spawner : MonoBehaviour
     private Room _currentRoom;
     private SpawnPoint[] _spawnPoints;
     private RewardSpawner _rewardSpawner;
+    private PlayerStats _playerStats;
 
     private void Awake()
     {
@@ -23,9 +25,10 @@ public class Spawner : MonoBehaviour
     }
 
     [Inject]
-    private void Construct(IInstantiator instantiator)
+    private void Construct(IInstantiator instantiator, PlayerStats playerStats)
     {
         _instantiator = instantiator;
+        _playerStats = playerStats;
     }
 
     public void SpawnEnemies(Room room, SpawnPoint[] spawnPoints)
@@ -104,12 +107,22 @@ public class Spawner : MonoBehaviour
     private void BossDied(Enemy boss)
     {
         boss.OnEnemyDeath -= BossDied;
+        
         _rewardSpawner.OpenPortal(_currentRoom.RoomCenter);
     }
 
     private void QuestEnemyDied(Enemy enemy)
     {
         enemy.OnEnemyDeath -= QuestEnemyDied;
+        switch (_reward)
+        {
+            case 1:
+                _playerStats.FirstReward();
+                break;
+            case 2:
+                _playerStats.SecondReward();
+                break;
+        }
         if (_needToChangeMusic) MusicHandler.Instance.PlayBackMusic();
         _rewardSpawner.SpawnQuestReward(_currentRoom.RoomCenter);
         _currentRoom.OpenTheDoors();

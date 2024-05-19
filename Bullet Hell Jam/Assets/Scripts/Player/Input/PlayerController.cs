@@ -15,8 +15,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerStatsSO _stats;
     [SerializeField] private ActiveWeapon _shotgun;
     [SerializeField] private ActiveWeapon[] _pistols;
+    [SerializeField] private Material _dashMat;
+    [SerializeField] private TrailRenderer _dashRend;
     private bool _isDashing = false;
     private bool _dashOnCD = false;
+    private bool _shadowDash;
+    private SpriteRenderer _sprite;
+    private Material _material;
+
 
     private WaitForSeconds _dashDurationSeconds;
     private WaitForSeconds _dashCDSeconds;
@@ -30,11 +36,13 @@ public class PlayerController : MonoBehaviour
     private Animator _anim;
     private ActiveWeapon _weapon;
     private DialogueSystem _dialogueSystem;
+    private StoryFlowHandler _storyFlowHandler;
 
     [Inject]
-    private void Construct(DialogueSystem dialogueSystem)
+    private void Construct(DialogueSystem dialogueSystem, StoryFlowHandler storyFlowHandler)
     {
         _dialogueSystem = dialogueSystem;
+        _storyFlowHandler = storyFlowHandler;
     }
 
     private void Awake()
@@ -42,7 +50,10 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _weapon = GetComponentInChildren<ActiveWeapon>();
+        _sprite = GetComponent<SpriteRenderer>();
+        _material = _sprite.material;
         _playerInput = new PlayerInput();
+        if (_stats.DashSceneRecieve < _storyFlowHandler.CurrentScene) _shadowDash = _stats.ShadowDash;
         _dashCD = _stats.DashCD;
         _dashCDSeconds = new WaitForSeconds(_dashCD);
         _dashDurationSeconds = new WaitForSeconds(_dashDuration);
@@ -129,6 +140,11 @@ public class PlayerController : MonoBehaviour
             _isDashing = true;
             _dashOnCD = true;
             _anim.SetTrigger("Dash");
+            if (_shadowDash)
+            {
+                _sprite.material = _dashMat;
+                _dashRend.emitting = true;
+            } 
             _rb.velocity = new Vector2(_movement.x * _dashSpeed, _movement.y * _dashSpeed);
             StartCoroutine(DashRoutine());
         }
@@ -138,6 +154,11 @@ public class PlayerController : MonoBehaviour
     {
         yield return _dashDurationSeconds;
         _isDashing = false;
+        if (_shadowDash) 
+        {
+            _sprite.material = _material;
+            _dashRend.emitting = false;
+        }
         yield return _dashCDSeconds;
         _dashOnCD = false;
     }

@@ -5,5 +5,5 @@ My name is John. I hunt dangerous creatures in different worlds. My last hunt la
 
 I am now making my way through the wild world to one of the portal keepers who, according to my sources, is able to help me find her, despite his shady reputation...
 
-USE "WASD" TO MOVE, "LEFT MOUSE BUTTON" TO SHOOT, "SPACEBAR" TO DASH
+USE "WASD" TO MOVE, "LEFT MOUSE BUTTON" TO SHOOT, "SPACEBAR" TO DASH, "E" TO INTERACT, "R" TO CHANGE WEAPON
 -> END

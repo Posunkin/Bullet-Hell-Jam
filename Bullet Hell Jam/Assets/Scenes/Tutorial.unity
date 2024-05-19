@@ -19723,6 +19723,7 @@ MonoBehaviour:
   _questEnemyPrefab: {fileID: 8307010091025762744, guid: 85627d14004834ac2ac0cd5ca72e8a10, type: 3}
   _bossEnemyPrefab: {fileID: 0}
   _needToChangeMusic: 0
+  _reward: 0
 --- !u!4 &1372474233
 Transform:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ public class PlayerUI : MonoBehaviour
     private WaitForSeconds _waitTime;
 
     private const string ARTIFACT_MESSAGE = "Portal is open!";
+    private const string DASH_MESSAGE = "Shadow Dash available!";
+    private const string HEALTH_MESSAGE = "Health UP!";
 
     private void Start()
     {
@@ -19,6 +21,20 @@ public class PlayerUI : MonoBehaviour
     public void ArtifactMessage()
     {
         _message.text = ARTIFACT_MESSAGE;
+        _message.gameObject.SetActive(true);
+        StartCoroutine(MessageRoutine());
+    }
+
+    public void DashMessage()
+    {
+        _message.text = DASH_MESSAGE;
+        _message.gameObject.SetActive(true);
+        StartCoroutine(MessageRoutine());
+    }
+
+    public void HealthMessage()
+    {
+        _message.text = HEALTH_MESSAGE;
         _message.gameObject.SetActive(true);
         StartCoroutine(MessageRoutine());
     }
