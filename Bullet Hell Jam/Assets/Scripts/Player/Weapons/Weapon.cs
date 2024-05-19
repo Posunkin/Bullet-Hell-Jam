@@ -96,6 +96,13 @@ public class Weapon : MonoBehaviour, IShootable
         StartCoroutine(ShootingRoutine());
     }
 
+    private void OnDisable()
+    {
+        _anim.Play("Idle");
+        StopAllCoroutines();
+        _shooting = false;
+    }
+
     private IEnumerator ShootingRoutine()
     {
         _shooting = true;
