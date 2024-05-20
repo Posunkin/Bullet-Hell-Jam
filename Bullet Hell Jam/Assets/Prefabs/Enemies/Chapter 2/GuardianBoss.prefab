@@ -149,7 +149,7 @@ MonoBehaviour:
     m_PostInfinity: 0
     m_RotationOrder: 4
   _system: {fileID: 5909897620799352284}
-  _bulletVisual: {fileID: 2100000, guid: 81fa2d61e258946adaf0fa8b1b45801f, type: 2}
+  _bulletVisual: {fileID: 2100000, guid: 6f7db3a7bab404f04aa256cb2862c629, type: 2}
   _colliderLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -259,7 +259,7 @@ MonoBehaviour:
   _size: 1.08
   _hasAnimation: 0
   _shapeEnable: 1
-  _projectilesVelocityEnabled: 1
+  _projectilesVelocityEnabled: 0
   _curve:
     serializedVersion: 2
     m_Curve:
@@ -285,7 +285,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _system: {fileID: 4194600215898759836}
-  _bulletVisual: {fileID: 2100000, guid: 81fa2d61e258946adaf0fa8b1b45801f, type: 2}
+  _bulletVisual: {fileID: 2100000, guid: 6f7db3a7bab404f04aa256cb2862c629, type: 2}
   _colliderLayer:
     serializedVersion: 2
     m_Bits: 8

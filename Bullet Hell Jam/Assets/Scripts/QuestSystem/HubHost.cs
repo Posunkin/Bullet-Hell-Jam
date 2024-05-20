@@ -70,6 +70,7 @@ public class HubHost : MonoBehaviour, IQuestable
                     _currentDialogue = _goodDialogue;
                 }
                 _portal.InitPortal(4);
+                _portal.gameObject.SetActive(true);
                 break;
         }
         _dialogueIndex = 0;
@@ -110,6 +111,10 @@ public class HubHost : MonoBehaviour, IQuestable
         else if (_dialogueIndex < _currentDialogue.Length - 1)
         {
             _dialogueIndex++;
+        }
+        else if (_currentChapter == 5)
+        {
+            Destroy(gameObject);
         }
     }
 }

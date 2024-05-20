@@ -42,6 +42,15 @@ public class DialogueSystem : MonoBehaviour
         ContinueStory();
     }
 
+    public void StartDialogue(TextAsset story)
+    {
+        _currentStory = new Story(story.text);
+        _dialoguePanel.gameObject.SetActive(true);
+        DialogueStarted?.Invoke();
+
+        ContinueStory();
+    }
+
     public void ContinueStory()
     {
         if (_currentStory.canContinue)
@@ -88,6 +97,7 @@ public class DialogueSystem : MonoBehaviour
     {
         DialogueEnded?.Invoke();
         _currentCharacter.DialogueEnded(_lastChoiceIndex);
+        _currentCharacter = null;
         _dialoguePanel.gameObject.SetActive(false);
         _dialogueText.text = "";
         _lastChoiceIndex = -1;

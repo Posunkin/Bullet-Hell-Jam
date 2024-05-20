@@ -5387,7 +5387,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _system: {fileID: 8766497808641034878}
-  _bulletVisual: {fileID: 2100000, guid: 81fa2d61e258946adaf0fa8b1b45801f, type: 2}
+  _bulletVisual: {fileID: 2100000, guid: 80c87972faf334858a531b38bb85a398, type: 2}
   _colliderLayer:
     serializedVersion: 2
     m_Bits: 520

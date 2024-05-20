@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d482276a25e34958af62c33685f25bc, type: 3}
   m_Name: Player Data
   m_EditorClassIdentifier: 
-  ShadowDash: 1
-  HealthRecieve: 1
+  ShadowDash: 0
+  HealthRecieve: 0
   DashSceneRecieve: 2
   HealthSceneRecieve: 3
   ExtraHealth: 10
   _maxHealth: 10
   _dashCD: 0.5
-  _pistolDamage: 0.3
+  _pistolDamage: 80
   _pistolDelay: 0.4
   _shotgunDamage: 0.5
   _shotgunDelay: 0.6
